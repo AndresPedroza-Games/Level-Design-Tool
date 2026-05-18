@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea1bbcb34581e4a9763841c9caff5c, type: 3}
+  m_Name: TilesContainer
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::TilesContainerSO
+  tilesGameobjects:
+  - {fileID: 2678191563641676358, guid: 27cc70de495ad31428797ca11902431c, type: 3}
+  - {fileID: 6712830096297490608, guid: 9198f5546d422b3479551c744976e674, type: 3}
+  - {fileID: 7673822473596035615, guid: 9a7cce485638a37458f48fa761144d0f, type: 3}
+  - {fileID: 5060971376010848299, guid: cea2510dcce3f814f89077a521de7de7, type: 3}
+  - {fileID: 3121612189213153316, guid: 2832b0468d7368540a83ba1dec523a4e, type: 3}
+  - {fileID: 2440300940052868572, guid: c180f6e5037c526449fc13d5ef4d71a0, type: 3}
+  - {fileID: 6908515355135426681, guid: 74d0d1d1c0ffbbd489bd050003d50a6d, type: 3}
+  - {fileID: 8206524559382693680, guid: 4ebc7ca56f72cf04ab2c8d09d22f649d, type: 3}
+  - {fileID: 3202811117490987027, guid: 6a88d6307cd0efd47b9709e43a466d90, type: 3}
+  - {fileID: 6798664545899842630, guid: cecf05693b5801b4cbfe65a0a3205cf7, type: 3}
+  - {fileID: 3066514252080923086, guid: c190b438d2321d74aa869d0b2d6b323d, type: 3}
+  - {fileID: 1964467258883111365, guid: 7626571dcbaf8e64f8a2e98254a31276, type: 3}
