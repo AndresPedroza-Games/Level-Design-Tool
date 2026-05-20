@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.Overlays;
+using UnityEngine.InputSystem;
 
 public class BuilderWindow : ToolWindowController
 {
@@ -8,6 +8,7 @@ public class BuilderWindow : ToolWindowController
     private Manager manager;
 
     private GameObject currentTile;
+    private Vector2 scrollPos;
 
 
     [MenuItem("Tools/Builder Window %M")]
@@ -33,7 +34,7 @@ public class BuilderWindow : ToolWindowController
         SaveData(_TileContainer);
         GUILayout.Space(20);
 
-        EditorGUILayout.BeginVertical("box");
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
         if (_TileContainer != null)
         {
@@ -50,7 +51,7 @@ public class BuilderWindow : ToolWindowController
         GUILayout.Space(20);
         CurrentTilesInScene();
 
-        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndScrollView();
 
     }
 
@@ -58,12 +59,12 @@ public class BuilderWindow : ToolWindowController
     {
         string dataPath = AssetDatabase.GetAssetPath(tilesContainer);
 
-        EditorPrefs.SetString("Container Path", dataPath);
+        SaveDataString("Container Path",dataPath);
     }
 
     private TilesContainerSO LoadData()
     {
-        string dataPath = EditorPrefs.GetString("Container Path");
+        string dataPath = LoadDataString("Container Path");
 
         return AssetDatabase.LoadAssetAtPath<TilesContainerSO>(dataPath);
     }
@@ -109,4 +110,5 @@ public class BuilderWindow : ToolWindowController
             ChangeWindow(BuilderCurrentTilesWindow.ShowWindow, this);
         }
     }
+
 }

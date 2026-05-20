@@ -1,11 +1,16 @@
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class ChangeMaterialWindow : ToolWindowController
 {
     private Material _SelectedMaterial;
     private Material _NewMaterial;
-    
+
+    private LayerMask _LayerMask;
+
+    private string _Tag;
+
     [MenuItem("Tools/Change Material Window")]
     public static void ShowWindow()
     {
@@ -15,6 +20,8 @@ public class ChangeMaterialWindow : ToolWindowController
     private void OnEnable()
     {
         SceneView.duringSceneGui += ChangeTileMaterial;
+        _SelectedMaterial = AssetDatabase.LoadAssetAtPath<Material>(LoadDataString("Selected Material"));
+        _LayerMask.value = LoadDataInt("LayerMask Change Material");
     }
 
     private void OnDisable()
@@ -27,10 +34,22 @@ public class ChangeMaterialWindow : ToolWindowController
         Heading("Change Material Window", this);
         GUILayout.Space(20);
 
-        if(_SelectedMaterial == null)
+        if (_SelectedMaterial == null)
             EditorGUILayout.HelpBox("No Material is selected!", MessageType.Warning);
-        else
-            EditorGUILayout.HelpBox("Place your new material!", MessageType.Warning);
+
+        MaterialSelector();
+
+        Filters();
+    }
+
+    private void MaterialSelector()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Selected Material", EditorStyles.boldLabel);
+        _SelectedMaterial = (Material)EditorGUILayout.ObjectField(_SelectedMaterial, typeof(Material), false);
+        GUILayout.EndHorizontal();
+
+        SaveDataString("Selected Material", AssetDatabase.GetAssetPath(_SelectedMaterial));
     }
 
     private void ChangeTileMaterial(SceneView sceneView)
@@ -39,6 +58,9 @@ public class ChangeMaterialWindow : ToolWindowController
 
         if (DetectObject(onClick) != null)
         {
+            if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
+                return;
+
             GameObject selectedObject = DetectObject(onClick);
 
             Renderer renderer = selectedObject.GetComponent<Renderer>();
@@ -48,5 +70,26 @@ public class ChangeMaterialWindow : ToolWindowController
             else
                 renderer.sharedMaterial = _SelectedMaterial;
         }   
+
+    }
+
+    protected void Filters()
+    {
+        GUILayout.Space(20);
+        GUILayout.Label("Filters", EditorStyles.boldLabel);
+        GUILayout.Space(10);
+
+        string[] layers = InternalEditorUtility.layers;
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Layer Mask");
+        _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
+        SaveDataInt("LayerMask Change Material", _LayerMask.value);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Tag");
+        _Tag = EditorGUILayout.TextArea("");
+        EditorGUILayout.EndHorizontal();
     }
 }

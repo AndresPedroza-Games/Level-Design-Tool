@@ -46,5 +46,36 @@ public class ToolWindowController : EditorWindow
     {
         closeWindow.Invoke();
         currentWindow.Close();
+    }    
+
+    protected void SaveDataInt(string name,int index)
+    {
+        EditorPrefs.SetInt(name,index);
+    }
+
+    protected void SaveDataString(string name, string value)
+    {
+        EditorPrefs.SetString(name, value);
+    }
+
+    protected int LoadDataInt(string name)
+    {
+        return EditorPrefs.GetInt(name);
+    }
+
+    protected string LoadDataString(string name)
+    {
+        return EditorPrefs.GetString(name);
+    }
+
+    protected bool CheckLayerMask(GameObject gameObject, LayerMask requireLayer, string tag)
+    {
+        if ((requireLayer.value & (1 << gameObject.layer)) == 0 && gameObject.tag != tag)
+        {
+            Debug.Log("Layer Mask doens't Match");
+            return false;
+        }
+
+        return true;
     }
 }

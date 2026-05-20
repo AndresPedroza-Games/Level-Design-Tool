@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CustomEditor(typeof(TilesController))]
 public class TilesCustomization : Editor
@@ -8,11 +9,12 @@ public class TilesCustomization : Editor
 
     private void OnSceneGUI()
     {
-        DrawHandler();
+        //DrawHandler();
     }
 
-    public static void PaintMaterial(Color newColor, GameObject tile)
+    public static void PaintMaterial(Color newColor, GameObject tile, LayerMask layerMask)
     {
+
         Renderer renderer = tile.GetComponent<Renderer>();
 
         Material tileMaterial = renderer.sharedMaterial;
@@ -50,4 +52,5 @@ public class TilesCustomization : Editor
             transform.position = newPos;
         }
     }
+
 }

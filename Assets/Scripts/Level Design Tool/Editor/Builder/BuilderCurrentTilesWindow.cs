@@ -4,6 +4,7 @@ using UnityEngine;
 public class BuilderCurrentTilesWindow : ToolWindowController
 {
     public TilesContainerSO _TileContainer;
+    private Vector2 scrollPos;
 
     public static void ShowWindow()
     {
@@ -17,6 +18,8 @@ public class BuilderCurrentTilesWindow : ToolWindowController
         GUILayout.Space(20);
         Heading("Current Prefabs in Scene", this);
 
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+
         if (_TileContainer != null)
         {
             for (int index = 0; index < _TileContainer.tilesGameobjects.Count; index++)
@@ -29,6 +32,8 @@ public class BuilderCurrentTilesWindow : ToolWindowController
             EditorGUILayout.HelpBox("Add the tile container in the manager!", MessageType.Warning);
             return;
         }
+
+        EditorGUILayout.EndScrollView();
     }
 
     private void CurrentTilesInScene(int index)
@@ -37,7 +42,7 @@ public class BuilderCurrentTilesWindow : ToolWindowController
 
         EditorGUILayout.BeginHorizontal("Box");
 
-        GUILayout.Box(currentTileTemplate.tileImg);
+        GUILayout.Box(currentTileTemplate.tileImg, GUILayout.Width(100), GUILayout.Height(100));
 
         EditorGUILayout.BeginVertical("Box");
         GUILayout.Label(currentTileTemplate.tileName);
