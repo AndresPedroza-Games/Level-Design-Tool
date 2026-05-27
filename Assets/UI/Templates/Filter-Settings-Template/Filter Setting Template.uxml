@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Templates/Filter-Settings-Template/Filter%20Setting%20Template.uss?fileID=7433441132597879392&amp;guid=3d5c34e351d1637469341d29d4ffc18b&amp;type=3#Filter Setting Template"/>
+    <ui:VisualElement name="Filters" class="Filter unity-text-field" style="flex-grow: 1;">
+        <ui:Label text="Filters" name="Filter-Titel" class="Filter-Text"/>
+        <ui:VisualElement name="Layer-Mask" class="Filter-Setting" style="flex-grow: 1;">
+            <ui:Label text="Layer Mask" name="Layer-Mask-Text" class="Text"/>
+            <ui:DropdownField label="Dropdown" name="Layer-Mask-Selection" class="Filter-Setting-Selector"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Tag" class="Filter-Setting" style="flex-grow: 1;">
+            <ui:Label text="Tag" name="Tag-Text" class="Text"/>
+            <ui:TextField label="Text Field" placeholder-text="filler text" name="Tag-Input" class="Filter-Setting-Selector" style="display: flex;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

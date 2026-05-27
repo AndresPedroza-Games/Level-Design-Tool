@@ -1,0 +1,66 @@
+VisualElement {
+}
+
+.Tool-Container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: rgba(111, 111, 111, 0.49);
+    padding-right: 10%;
+    padding-left: 10%;
+    margin-top: 10px;
+}
+
+.Body {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    align-self: auto;
+    background-color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.Tool-Text {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    -unity-text-align: middle-left;
+    word-spacing: 25px;
+    -unity-text-outline-width: 0.5px;
+    -unity-text-outline-color: rgb(24, 64, 113);
+    text-shadow: 5px 0 0 rgb(1, 11, 72);
+}
+
+.Tool-Button {
+    background-color: rgb(42, 55, 84);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 11px;
+    width: 30%;
+}
+
+.Header {
+    align-content: flex-start;
+    justify-content: center;
+    align-self: center;
+    background-color: rgb(3, 6, 29);
+    width: 100%;
+}
+
+.Header-Text {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 28px;
+    -unity-text-align: upper-center;
+}

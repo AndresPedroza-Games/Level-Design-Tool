@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
+    <Style src="project://database/Assets/UI/Tools-Windows/Builder/Current%20Prefabs/Current%20Prefabs%20Window.uss?fileID=7433441132597879392&amp;guid=fbe98f68a29f696418681ebda983bde3&amp;type=3#Current Prefabs Window"/>
+    <ui:Instance template="Header-Tool-Template">
+        <AttributeOverrides element-name="Header-Text" text="CURRENT PREFABS"/>
+    </ui:Instance>
+</ui:UXML>

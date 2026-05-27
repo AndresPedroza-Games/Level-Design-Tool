@@ -1,0 +1,43 @@
+:root {
+    background-color: rgb(3, 6, 29);
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.Titel {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.Btns {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Confirm {
+    background-color: rgb(2, 70, 0);
+}
+
+.Cancel {
+    background-color: rgb(89, 0, 0);
+}
+
+.Btn {
+    -unity-font-style: bold;
+    width: 40%;
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}

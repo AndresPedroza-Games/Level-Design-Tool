@@ -1,0 +1,35 @@
+:root {
+}
+
+.Header {
+    background-color: rgba(2, 42, 91, 0.73);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.Header-Text {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    -unity-text-align: middle-left;
+}
+
+.Header-Btn {
+    background-color: rgb(2, 42, 91);
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 30%;
+    height: 6%;
+}

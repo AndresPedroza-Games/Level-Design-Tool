@@ -1,0 +1,47 @@
+:root {
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    background-color: rgb(3, 6, 29);
+}
+
+.Container {
+    width: 100%;
+    background-color: rgb(60, 60, 60);
+    height: 5%;
+    min-height: 5%;
+    max-height: 5%;
+}
+
+.Gap {
+    margin-top: 10px;
+}
+
+.Btn {
+    max-height: none;
+    -unity-font-style: bold;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    background-color: rgb(2, 42, 91);
+    width: 100%;
+    min-width: auto;
+}
+
+.Scroll {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    height: 70%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}

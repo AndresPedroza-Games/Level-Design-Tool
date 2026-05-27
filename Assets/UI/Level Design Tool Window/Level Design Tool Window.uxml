@@ -1,0 +1,28 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Level%20Design%20Tool%20Window/Level%20Design%20Tool%20Window.uss?fileID=7433441132597879392&amp;guid=1993b59eef61b28429baac4ea61de8f7&amp;type=3#Level Design Tool Window"/>
+    <ui:VisualElement name="Header" class="Header" style="flex-grow: 1;">
+        <ui:Label text="LEVEL DESIGN TOOL" name="Titel" class="Header-Text"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Body" class="Body" style="flex-grow: 1; background-color: rgb(3, 6, 29); margin-bottom: 0;">
+        <ui:VisualElement name="Paint-Brush-Container" class="Tool-Container" style="flex-grow: 1;">
+            <ui:Label text="Paint Brush" name="Tool-Name" class="Tool-Text"/>
+            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Area-Selector-Container" class="Tool-Container" style="flex-grow: 1;">
+            <ui:Label text="Area Selector" name="Tool-Name" class="Tool-Text"/>
+            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Change-Material-Container" class="Tool-Container" style="flex-grow: 1;">
+            <ui:Label text="Change Material" name="Tool-Name" class="Tool-Text"/>
+            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Builder-Container" class="Tool-Container" style="flex-grow: 1;">
+            <ui:Label text="Builder" name="Tool-Name" class="Tool-Text"/>
+            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Eraser-Container" class="Tool-Container" style="flex-grow: 1;">
+            <ui:Label text="Eraser" name="Tool-Name" class="Tool-Text"/>
+            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

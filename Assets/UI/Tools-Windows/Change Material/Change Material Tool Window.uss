@@ -1,0 +1,7 @@
+:root {
+    background-color: rgb(3, 6, 29);
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
