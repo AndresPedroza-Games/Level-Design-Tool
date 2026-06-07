@@ -4,7 +4,9 @@
     <ui:Instance template="Header-Tool-Template">
         <AttributeOverrides element-name="Header-Text" text="BUILDER"/>
     </ui:Instance>
-    <ui:VisualElement name="Container" class="Container Gap" style="flex-grow: 1; width: auto;"/>
+    <ui:VisualElement name="Container" class="Container Gap" style="flex-grow: 1; width: auto;">
+        <ui:Label text="Container: " class="text"/>
+    </ui:VisualElement>
     <ui:ScrollView class="Scroll Gap"/>
-    <ui:Button text="Current Prefabs" name="Current-Prefabs" class="Gap Btn" style="width: auto;"/>
+    <ui:Button text="Current Prefabs" name="Current-Prefabs-Button" class="Gap Btn" style="width: auto;"/>
 </ui:UXML>

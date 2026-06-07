@@ -1,22 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class ToolWindowController : EditorWindow
 {
-    protected void Heading(string headingName, EditorWindow closeWindow)
+
+    protected void Heading(VisualElement ui, EditorWindow closeWindow)
     {
-        GUILayout.Space(20);
-        EditorGUILayout.BeginHorizontal();
-
-        GUILayout.Label(headingName, EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
-        if (GUILayout.Button("Return"))
-            Return(closeWindow);
-
-        EditorGUILayout.EndHorizontal();
-        GUILayout.Space(10);
+        SetButton(ui, "Return-Button", () => Return(closeWindow));
     }
 
     protected GameObject DetectObject(EventType eventType)
@@ -42,9 +34,9 @@ public class ToolWindowController : EditorWindow
         closeWindow.Close();
     }
 
-    protected void ChangeWindow(UnityAction closeWindow, EditorWindow currentWindow)
+    protected void ChangeWindow(UnityAction newWindow, EditorWindow currentWindow)
     {
-        closeWindow.Invoke();
+        newWindow.Invoke();
         currentWindow.Close();
     }    
 
@@ -77,5 +69,18 @@ public class ToolWindowController : EditorWindow
         }
 
         return true;
+    }
+
+    protected void SetButton(VisualElement ui, string buttonName, UnityAction method)
+    {
+        Button returnButton = ui.Q<Button>(buttonName);
+
+        if (returnButton == null)
+        {
+            Debug.Log($"Button {buttonName} not found");
+            return;
+        }
+
+        returnButton.clicked += method.Invoke;
     }
 }

@@ -4,7 +4,7 @@ using UnityEditorInternal;
 
 public class EraseWindow : ToolWindowController
 {
-    private Manager manager;
+    private Manager _Manager;
 
     private LayerMask _LayerMask;
 
@@ -20,7 +20,6 @@ public class EraseWindow : ToolWindowController
     private void OnEnable()
     {
         SceneView.duringSceneGui += EraseObject;
-        manager = FindFirstObjectByType<Manager>();
 
         _LayerMask.value = LoadDataInt("LayerMask Eraser");
         _Radius = LoadDataInt("Eraser Radius");
@@ -33,15 +32,19 @@ public class EraseWindow : ToolWindowController
 
     public void OnGUI()
     {
-        Heading("Erase Tool", this);
+        Heading(rootVisualElement, this);
 
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Radius", EditorStyles.boldLabel);
         _Radius = EditorGUILayout.IntSlider(_Radius, 1, 10);
+
         SaveDataInt("Eraser Radius", _Radius);
-        GUILayout.EndHorizontal();
 
         Filters();
+    }
+
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.eraserToolWindow.CloneTree(rootVisualElement);
     }
 
     private void EraseObject(SceneView sceneView)
@@ -51,16 +54,16 @@ public class EraseWindow : ToolWindowController
             if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
                 return;
 
-            manager.tilesContainer.tilesGameobjects.Remove(GetTileInList(DetectObject(EventType.MouseDown)));
+            _Manager.tilesContainer.tilesGameobjects.Remove(GetTileInList(DetectObject(EventType.MouseDown)));
             DestroyImmediate(DetectObject(EventType.MouseDown));
         }
     }
 
     private GameObject GetTileInList(GameObject tile)
     {
-        foreach (GameObject tiles in manager.tilesContainer.tilesGameobjects)
+        foreach (GameObject tiles in _Manager.tilesContainer.tilesGameobjects)
         {
-            if (tile.GetInstanceID() == tiles.GetInstanceID() && manager.tilesContainer.tilesGameobjects.Contains(tile))
+            if (tile.GetInstanceID() == tiles.GetInstanceID() && _Manager.tilesContainer.tilesGameobjects.Contains(tile))
                 return tiles;
         }
         return null;

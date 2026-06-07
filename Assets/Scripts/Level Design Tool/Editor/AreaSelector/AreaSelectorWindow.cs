@@ -12,15 +12,14 @@ public class AreaSelectorWindow : ToolWindowController
 
     public List<GameObject> selectedObjects = new List<GameObject>();
 
+    Manager _Manager;
+
+
     [MenuItem("Tools/Area Selector Tool")]
 
     public static void ShowWindow()
     {
-        Manager manager = FindFirstObjectByType<Manager>();
         GetWindow<AreaSelectorWindow>();
-
-        GameObject areaSelector = Instantiate(manager.areaSelectorTool);
-        areaSelector.GetComponent<AreaSelectorTool>().manager = manager;
     }
 
     private void OnEnable()
@@ -30,7 +29,7 @@ public class AreaSelectorWindow : ToolWindowController
 
     public void OnGUI()
     {
-        Heading("Area Selector", this);
+        Heading(rootVisualElement, this);
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Radius", EditorStyles.boldLabel);
@@ -41,12 +40,16 @@ public class AreaSelectorWindow : ToolWindowController
         Filters();
     }
 
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.AreaSelectorToolWindow.CloneTree(rootVisualElement);
+    }
+
     private void SelectGameObject()
     {
         if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
             return;
-
-
     } 
 
     private void Filters()
@@ -67,11 +70,6 @@ public class AreaSelectorWindow : ToolWindowController
         GUILayout.Label("Tag");
         _Tag = EditorGUILayout.TextArea("");
         EditorGUILayout.EndHorizontal();
-    }
-
-    private void OnDestroy()
-    {
-        DestroyImmediate(FindFirstObjectByType<AreaSelectorTool>().gameObject);
     }
 
 }

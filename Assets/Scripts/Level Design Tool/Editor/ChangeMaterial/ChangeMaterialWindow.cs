@@ -6,6 +6,7 @@ public class ChangeMaterialWindow : ToolWindowController
 {
     private Material _SelectedMaterial;
     private Material _NewMaterial;
+    private Manager _Manager;
 
     private LayerMask _LayerMask;
 
@@ -31,7 +32,7 @@ public class ChangeMaterialWindow : ToolWindowController
 
     private void OnGUI()
     {
-        Heading("Change Material Window", this);
+        Heading(rootVisualElement, this);
         GUILayout.Space(20);
 
         if (_SelectedMaterial == null)
@@ -91,5 +92,11 @@ public class ChangeMaterialWindow : ToolWindowController
         GUILayout.Label("Tag");
         _Tag = EditorGUILayout.TextArea("");
         EditorGUILayout.EndHorizontal();
+    }
+
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.changeMaterialToolWindow.CloneTree(rootVisualElement);
     }
 }

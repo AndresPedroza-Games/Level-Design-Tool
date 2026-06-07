@@ -8,10 +8,16 @@
 
 .Container {
     width: 100%;
-    background-color: rgb(60, 60, 60);
+    background-color: rgb(46, 46, 46);
     height: 5%;
     min-height: 5%;
     max-height: 5%;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .Gap {
@@ -44,4 +50,11 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+}
+
+.text {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    font-size: 10px;
 }

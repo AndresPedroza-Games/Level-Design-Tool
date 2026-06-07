@@ -443,6 +443,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be2b77a649b4474dbe9485c4c9bf256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Manager
+  levelDesignToolWindow: {fileID: 9197481963319205126, guid: b9ef4824315179647a50f5c2a4a85ff7, type: 3}
+  paintBrushToolWindow: {fileID: 9197481963319205126, guid: 127f03131f3b0584ebe050823022ba5b, type: 3}
+  AreaSelectorToolWindow: {fileID: 9197481963319205126, guid: 04444ad021530974bb3a5b96dd367b33, type: 3}
+  changeMaterialToolWindow: {fileID: 9197481963319205126, guid: e969d710d6ed7944a8c50ebf0b060edb, type: 3}
+  builderToolWindow: {fileID: 9197481963319205126, guid: 5a8d3cb4aabd35048a23fb6ca3ed43a1, type: 3}
+  eraserToolWindow: {fileID: 9197481963319205126, guid: 6c39b921a2c36ef4eba8e572a66cbc75, type: 3}
+  header: {fileID: 9197481963319205126, guid: 30875ba5909cac34d8fd63ea76fdd588, type: 3}
+  filters: {fileID: 9197481963319205126, guid: 413dba83bed3f654a8524a10f46511c0, type: 3}
   tilesContainer: {fileID: 11400000, guid: ef006bf45f72b484fbc3c3e0fe35172c, type: 2}
   paintBrushTool: {fileID: 8758357336397124706, guid: 38cbb66b93bc3214baaea5997b8e841d, type: 3}
   areaSelectorTool: {fileID: 7130126264735755493, guid: d859df910a4234443adc2cb4e6f1229c, type: 3}

@@ -16,7 +16,7 @@ public class BuilderCurrentTilesWindow : ToolWindowController
         _TileContainer = FindFirstObjectByType<Manager>().tilesContainer;
 
         GUILayout.Space(20);
-        Heading("Current Prefabs in Scene", this);
+        //Heading("Current Prefabs in Scene", this);
 
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 

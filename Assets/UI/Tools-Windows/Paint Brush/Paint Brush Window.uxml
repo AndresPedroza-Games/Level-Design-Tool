@@ -14,7 +14,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="Radius" class="Radius" style="flex-grow: 1;">
                 <ui:Label text="Radius" name="Radius-Text" class="Text"/>
-                <ui:Slider label="Slider" value="42" high-value="100" name="Radius-Slider"/>
+                <ui:Slider label="Slider" value="0" high-value="10" name="Radius-Slider" low-value="1"/>
                 <ui:IntegerField label="Integer Field" value="1" max-length="10"/>
             </ui:VisualElement>
         </ui:VisualElement>

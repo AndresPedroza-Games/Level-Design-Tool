@@ -1,48 +1,50 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class LevelDesignToolWindow : EditorWindow
 {
+    private Manager _Manager;
+
     [MenuItem("Tools/Level Design Tool %L")]
     public static void ShowWindow()
     {
-        GetWindow<LevelDesignToolWindow>();     
+        GetWindow<LevelDesignToolWindow>();
     }
 
     public void OnGUI()
     {
-        GUILayout.Label("Level Design Tool");
-        GUILayout.Space(10);
+        ToolBox("Paint-Brush-Button", PaintBrushWindow.ShowWindow);
 
-        GUILayout.BeginVertical();
-        ToolBox("Paint brush", PaintBrushWindow.ShowWindow);
+        ToolBox("Area-Selector-Button", AreaSelectorWindow.ShowWindow);
 
-        GUILayout.Space(10);
-        ToolBox("Area Selector", AreaSelectorWindow.ShowWindow);
+        ToolBox("Change-Material-Button", ChangeMaterialWindow.ShowWindow);
 
-        GUILayout.Space(10);
-        ToolBox("Change Material", ChangeMaterialWindow.ShowWindow);
+        ToolBox("Builder-Button", BuilderWindow.ShowWindow);
 
-        GUILayout.Space(10);
-        ToolBox("Builder", BuilderWindow.ShowWindow);
+        ToolBox("Eraser-Button", EraseWindow.ShowWindow);
 
-        GUILayout.Space(10);
-        ToolBox("Eraser", EraseWindow.ShowWindow);
+    }
 
-        GUILayout.EndVertical();
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+
+        _Manager.levelDesignToolWindow.CloneTree(rootVisualElement);
     }
 
     private void ToolBox(string toolName, UnityAction method)
     {
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(toolName);
-        if (GUILayout.Button("Use"))
+        Button button = rootVisualElement.Q<Button>(toolName);
+
+        if(button == null)
         {
-            method.Invoke();
-            this.Close();
+            Debug.Log("Button not found");
+            return;
         }
 
-        GUILayout.EndHorizontal();
+        button.clicked += method.Invoke;
+        button.clicked += this.Close;
     }
 }

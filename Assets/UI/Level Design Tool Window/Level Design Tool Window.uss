@@ -30,12 +30,12 @@ VisualElement {
 .Tool-Text {
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
-    font-size: 16px;
+    font-size: 22px;
     -unity-text-align: middle-left;
     word-spacing: 25px;
-    -unity-text-outline-width: 0.5px;
-    -unity-text-outline-color: rgb(24, 64, 113);
-    text-shadow: 5px 0 0 rgb(1, 11, 72);
+    -unity-text-outline-width: 0;
+    -unity-text-outline-color: rgb(255, 255, 255);
+    text-shadow: 0 0 0 rgb(1, 11, 72);
 }
 
 .Tool-Button {
@@ -48,6 +48,11 @@ VisualElement {
     -unity-font-style: bold;
     letter-spacing: 11px;
     width: 30%;
+    height: 50%;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
 }
 
 .Header {

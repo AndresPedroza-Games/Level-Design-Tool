@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class BuilderWindow : ToolWindowController
 {
     private TilesContainerSO _TileContainer;
-    private Manager manager;
+    private Manager _Manager;
 
     private GameObject currentTile;
     private Vector2 scrollPos;
@@ -23,16 +23,12 @@ public class BuilderWindow : ToolWindowController
             _TileContainer = LoadData();
     }
 
-    private void OnGUI()
+    public void OnGUI()
     {
-         manager = FindFirstObjectByType<Manager>();
-
-        Heading("Builder", this);
-        GUILayout.Space(20);
+        Heading(rootVisualElement, this);
 
         _TileContainer = (TilesContainerSO)EditorGUILayout.ObjectField(_TileContainer, typeof(TilesContainerSO), false);
         SaveData(_TileContainer);
-        GUILayout.Space(20);
 
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
@@ -47,12 +43,15 @@ public class BuilderWindow : ToolWindowController
         {
             EditorGUILayout.HelpBox("Tile Container is missing!", MessageType.Warning);
         }
-        
-        GUILayout.Space(20);
-        CurrentTilesInScene();
 
-        EditorGUILayout.EndScrollView();
+        SetButton(rootVisualElement, "Current-Prefabs-Button", () => ChangeWindow(BuilderCurrentTilesWindow.ShowWindow, this));
 
+    }
+
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.builderToolWindow.CloneTree(rootVisualElement);
     }
 
     private void SaveData(TilesContainerSO tilesContainer)
@@ -71,15 +70,12 @@ public class BuilderWindow : ToolWindowController
 
     private void InstantiateTile(GameObject prefab)
     {
-        if (GUILayout.Button("Instantiate"))
-        {
-            currentTile = Instantiate(prefab, manager.spawnPoint.position, Quaternion.identity, manager.gameObject.transform);
+        currentTile = Instantiate(prefab, _Manager.spawnPoint.position, Quaternion.identity, _Manager.gameObject.transform);
 
-            BuilderConfirmationWindow.currentTile = this.currentTile;
-            ChangeWindow(BuilderConfirmationWindow.ShowWindow, this);
+        BuilderConfirmationWindow.currentTile = this.currentTile;
+        ChangeWindow(BuilderConfirmationWindow.ShowWindow, this);
 
-            TilesCustomization.currentTile = this.currentTile;
-        }
+        TilesCustomization.currentTile = this.currentTile;
     }
 
     private void BuilderTilesContainerBox(int index)
@@ -95,20 +91,12 @@ public class BuilderWindow : ToolWindowController
 
         EditorGUILayout.BeginVertical("Box");
         GUILayout.Label(currentTileTemplate.tileName);
-        InstantiateTile(currentTileTemplate.tilePrefab);
+        SetButton(rootVisualElement, "", () => InstantiateTile(currentTileTemplate.tilePrefab));
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.EndHorizontal();
 
         GUILayout.Space(10);
-    }
-
-    private void CurrentTilesInScene()
-    {
-        if(GUILayout.Button("Current Prefabs"))
-        {
-            ChangeWindow(BuilderCurrentTilesWindow.ShowWindow, this);
-        }
     }
 
 }

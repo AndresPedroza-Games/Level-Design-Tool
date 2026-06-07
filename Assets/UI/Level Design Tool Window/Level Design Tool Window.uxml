@@ -6,23 +6,23 @@
     <ui:VisualElement name="Body" class="Body" style="flex-grow: 1; background-color: rgb(3, 6, 29); margin-bottom: 0;">
         <ui:VisualElement name="Paint-Brush-Container" class="Tool-Container" style="flex-grow: 1;">
             <ui:Label text="Paint Brush" name="Tool-Name" class="Tool-Text"/>
-            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+            <ui:Button text="Use" name="Paint-Brush-Button" class="Tool-Button"/>
         </ui:VisualElement>
         <ui:VisualElement name="Area-Selector-Container" class="Tool-Container" style="flex-grow: 1;">
             <ui:Label text="Area Selector" name="Tool-Name" class="Tool-Text"/>
-            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+            <ui:Button text="Use" name="Area-Selector-Button" class="Tool-Button"/>
         </ui:VisualElement>
         <ui:VisualElement name="Change-Material-Container" class="Tool-Container" style="flex-grow: 1;">
             <ui:Label text="Change Material" name="Tool-Name" class="Tool-Text"/>
-            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+            <ui:Button text="Use" name="Change-Material-Button" class="Tool-Button"/>
         </ui:VisualElement>
         <ui:VisualElement name="Builder-Container" class="Tool-Container" style="flex-grow: 1;">
             <ui:Label text="Builder" name="Tool-Name" class="Tool-Text"/>
-            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+            <ui:Button text="Use" name="Builder-Button" class="Tool-Button"/>
         </ui:VisualElement>
         <ui:VisualElement name="Eraser-Container" class="Tool-Container" style="flex-grow: 1;">
             <ui:Label text="Eraser" name="Tool-Name" class="Tool-Text"/>
-            <ui:Button text="Use" name="Use-Tool" class="Tool-Button"/>
+            <ui:Button text="Use" name="Eraser-Button" class="Tool-Button"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
