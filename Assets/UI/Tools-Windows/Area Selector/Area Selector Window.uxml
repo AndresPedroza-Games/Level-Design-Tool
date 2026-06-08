@@ -2,8 +2,16 @@
     <ui:Template name="Filter Setting Template" src="project://database/Assets/UI/Templates/Filter-Settings-Template/Filter%20Setting%20Template.uxml?fileID=9197481963319205126&amp;guid=413dba83bed3f654a8524a10f46511c0&amp;type=3#Filter Setting Template"/>
     <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
     <Style src="project://database/Assets/UI/Tools-Windows/Area%20Selector/Area%20Selector%20Window.uss?fileID=7433441132597879392&amp;guid=98c82ad1e5b3d5f46a125e98d3ea3672&amp;type=3#Area Selector Window"/>
-    <ui:Instance template="Header-Tool-Template">
+    <ui:Instance template="Header-Tool-Template" class="header">
         <AttributeOverrides element-name="Header-Text" text="AREA SELECTOR"/>
     </ui:Instance>
-    <ui:Instance template="Filter Setting Template"/>
+    <ui:VisualElement name="Body" class="body" style="flex-grow: 1;">
+        <ui:Label text="Settings" name="Setting-Titel" class="setting-text"/>
+        <ui:VisualElement name="Radius-Container" class="setting-container radius-container" style="flex-grow: 1;">
+            <ui:Label text="Radius" name="Radius-Titel" class="text"/>
+            <ui:Slider label="Slider" value="42" high-value="10" low-value="1"/>
+            <ui:IntegerField label="Integer Field" value="1" max-length="10"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Instance template="Filter Setting Template" class="filters"/>
 </ui:UXML>

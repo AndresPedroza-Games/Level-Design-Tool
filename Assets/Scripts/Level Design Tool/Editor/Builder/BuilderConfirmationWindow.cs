@@ -1,9 +1,11 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuilderConfirmationWindow : ToolWindowController
 {
     public static GameObject currentTile;
+    private Manager _Manager;
 
     public static void ShowWindow()
     {
@@ -12,28 +14,31 @@ public class BuilderConfirmationWindow : ToolWindowController
 
     private void OnGUI()
     {
+        SetButton(rootVisualElement, "Confirm", Confirm);
+        SetButton(rootVisualElement, "Cancel", Cancel);
+    }
 
-        EditorGUILayout.BeginHorizontal();
-        Confirm();
-        Cancel();
-        EditorGUILayout.EndHorizontal();
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.confirmSelection.CloneTree(rootVisualElement);
     }
 
     private void Confirm()
     {
-        if (GUILayout.Button("Place") && currentTile != null)
+        if (currentTile != null)
         {
             currentTile.GetComponent<TilesController>().tileIsPlaced = true;
             currentTile.transform.position = currentTile.GetComponent<TilesController>().endPosition;
 
-            FindFirstObjectByType<Manager>().tilesContainer.tilesGameobjects.Add(currentTile);
-            ChangeWindow(BuilderWindow.ShowWindow,this);
+            _Manager.tilesContainer.tilesGameobjects.Add(currentTile);
+            ChangeWindow(BuilderWindow.ShowWindow, this);
         }
     }
 
     private void Cancel()
     {
-        if (GUILayout.Button("Cancel") && !currentTile)
+        if (currentTile)
         {
             DestroyImmediate(currentTile);
             ChangeWindow(BuilderWindow.ShowWindow, this);

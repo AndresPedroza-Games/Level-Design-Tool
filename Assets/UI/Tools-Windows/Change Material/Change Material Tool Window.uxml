@@ -2,8 +2,9 @@
     <ui:Template name="Filter Setting Template" src="project://database/Assets/UI/Templates/Filter-Settings-Template/Filter%20Setting%20Template.uxml?fileID=9197481963319205126&amp;guid=413dba83bed3f654a8524a10f46511c0&amp;type=3#Filter Setting Template"/>
     <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
     <Style src="project://database/Assets/UI/Tools-Windows/Change%20Material/Change%20Material%20Tool%20Window.uss?fileID=7433441132597879392&amp;guid=457b89808861cc34bbf41ebfb231dfff&amp;type=3#Change Material Tool Window"/>
-    <ui:Instance template="Header-Tool-Template">
+    <ui:Instance template="Header-Tool-Template" class="header">
         <AttributeOverrides element-name="Header-Text" text="CHANGE MATERIAL"/>
     </ui:Instance>
-    <ui:Instance template="Filter Setting Template"/>
+    <ui:VisualElement name="Body" class="body" style="flex-grow: 1;"/>
+    <ui:Instance template="Filter Setting Template" class="filters"/>
 </ui:UXML>

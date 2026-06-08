@@ -9,8 +9,10 @@
 .Titel {
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
-    font-size: 18px;
+    font-size: 26px;
     margin-bottom: 5px;
+    -unity-text-align: upper-center;
+    margin-top: 10px;
 }
 
 .Btns {

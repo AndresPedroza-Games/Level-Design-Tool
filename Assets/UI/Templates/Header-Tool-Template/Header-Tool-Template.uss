@@ -34,4 +34,7 @@
     width: auto;
     height: auto;
     flex-grow: 0;
+    min-width: auto;
+    max-width: none;
+    max-height: none;
 }

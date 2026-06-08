@@ -5,3 +5,17 @@
     padding-bottom: 10px;
     padding-left: 10px;
 }
+
+.header {
+    flex-grow: 1;
+    max-height: 10%;
+}
+
+.filters {
+    flex-grow: 1;
+    max-height: 30%;
+}
+
+.body {
+    max-height: 70%;
+}
