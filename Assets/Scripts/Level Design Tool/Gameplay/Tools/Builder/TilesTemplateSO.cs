@@ -6,5 +6,5 @@ public class TilesTemplateSO : ScriptableObject
 {
     public string tileName;
     public GameObject tilePrefab;
-    public Texture tileImg;
+    public Sprite tileImg;
 }

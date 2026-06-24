@@ -22,6 +22,7 @@
 
 .Gap {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .Btn {
@@ -44,12 +45,21 @@
 
 .Scroll {
     width: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
     height: 70%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    flex-wrap: wrap;
 }
 
 .text {
@@ -57,4 +67,50 @@
     -unity-font-style: bold;
     -unity-text-align: middle-left;
     font-size: 10px;
+}
+
+.unity-object-field {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+    min-width: 30%;
+    min-height: 30%;
+}
+
+.setting-text {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 21px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+.setting-container {
+    background-color: rgba(79, 79, 79, 0.8);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-height: 20%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.header {
+    margin-bottom: 10px;
 }

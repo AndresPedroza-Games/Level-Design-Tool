@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class EraseWindow : ToolWindowController
 {
@@ -9,7 +11,7 @@ public class EraseWindow : ToolWindowController
     private LayerMask _LayerMask;
 
     private string _Tag;
-    private int _Radius;
+    private float _Radius;
 
     [MenuItem("Tools/Erase Tool")]
     public static void ShowWindow()
@@ -21,8 +23,9 @@ public class EraseWindow : ToolWindowController
     {
         SceneView.duringSceneGui += EraseObject;
 
-        _LayerMask.value = LoadDataInt("LayerMask Eraser");
+        _LayerMask.value = LoadDataInt("Eraser LayerMask");
         _Radius = LoadDataInt("Eraser Radius");
+        _Tag = LoadDataString("Eraser Tag");
     }
 
     private void OnDisable()
@@ -34,9 +37,11 @@ public class EraseWindow : ToolWindowController
     {
         Heading(rootVisualElement, this);
 
-        _Radius = EditorGUILayout.IntSlider(_Radius, 1, 10);
 
-        SaveDataInt("Eraser Radius", _Radius);
+        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
+        _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+
+        SaveDataInt("Eraser Radius", _Radius.ConvertTo<int>());
 
         Filters();
     }
@@ -45,6 +50,12 @@ public class EraseWindow : ToolWindowController
     {
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.eraserToolWindow.CloneTree(rootVisualElement);
+
+        if (_Tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+
+        if (_Radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
     }
 
     private void EraseObject(SceneView sceneView)
@@ -54,16 +65,16 @@ public class EraseWindow : ToolWindowController
             if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
                 return;
 
-            _Manager.tilesContainer.tilesGameobjects.Remove(GetTileInList(DetectObject(EventType.MouseDown)));
+            _Manager.currentTilesContainer.tilesGameobjects.Remove(GetTileInList(DetectObject(EventType.MouseDown)));
             DestroyImmediate(DetectObject(EventType.MouseDown));
         }
     }
 
     private GameObject GetTileInList(GameObject tile)
     {
-        foreach (GameObject tiles in _Manager.tilesContainer.tilesGameobjects)
+        foreach (GameObject tiles in _Manager.currentTilesContainer.tilesGameobjects)
         {
-            if (tile.GetInstanceID() == tiles.GetInstanceID() && _Manager.tilesContainer.tilesGameobjects.Contains(tile))
+            if (tile.GetInstanceID() == tiles.GetInstanceID() && _Manager.currentTilesContainer.tilesGameobjects.Contains(tile))
                 return tiles;
         }
         return null;
@@ -71,21 +82,14 @@ public class EraseWindow : ToolWindowController
 
     private void Filters()
     {
-        GUILayout.Space(20);
-        GUILayout.Label("Filters", EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
         string[] layers = InternalEditorUtility.layers;
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Layer Mask");
         _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
-        SaveDataInt("LayerMask Eraser", _LayerMask.value);
-        EditorGUILayout.EndHorizontal();
+        //_LayerMask.value = rootVisualElement.Q<MaskField>();
+        SaveDataInt("Eraser LayerMas", _LayerMask.value);
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Tag");
-        _Tag = EditorGUILayout.TextArea("");
-        EditorGUILayout.EndHorizontal();
+        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+
+        SaveDataString("Eraser Tag", _Tag);
     }
 }

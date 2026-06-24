@@ -27,7 +27,7 @@ public class PaintBrushWindow : ToolWindowController
         SceneView.duringSceneGui += PaintTile;
 
         _SelectedColor = LoadColor();
-        _LayerMask.value = LoadDataInt("LayerMask Paint");
+        _LayerMask.value = LoadDataInt("Paint Brush LayerMask");
         _Radius = LoadDataInt("Paint Brush Radius");
         _Tag = LoadDataString("Paint Brush Tag");        
 
@@ -42,9 +42,10 @@ public class PaintBrushWindow : ToolWindowController
     {
         Heading(rootVisualElement, this);
 
-        _SelectedColor = EditorGUILayout.ColorField("Color", _SelectedColor);
+        _SelectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
         SaveColor(_SelectedColor);
 
+        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
         _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
         SaveDataInt("Paint Brush Radius", _Radius.ConvertTo<int>());
 
@@ -58,6 +59,12 @@ public class PaintBrushWindow : ToolWindowController
 
         if (_Tag != null)
             rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+
+        if(_SelectedColor != null)
+            rootVisualElement.Q<ColorField>("Color-Picker").value = _SelectedColor;
+
+        if (_Radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
     }
 
     private void PaintTile(SceneView sceneView)
@@ -90,7 +97,7 @@ public class PaintBrushWindow : ToolWindowController
 
         _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
         //_LayerMask.value = rootVisualElement.Q<MaskField>();
-        SaveDataInt("LayerMask Paint", _LayerMask.value);
+        SaveDataInt("Paint Brush LayerMask", _LayerMask.value);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 

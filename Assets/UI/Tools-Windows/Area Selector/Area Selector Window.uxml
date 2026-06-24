@@ -9,8 +9,8 @@
         <ui:Label text="Settings" name="Setting-Titel" class="setting-text"/>
         <ui:VisualElement name="Radius-Container" class="setting-container radius-container" style="flex-grow: 1;">
             <ui:Label text="Radius" name="Radius-Titel" class="text"/>
-            <ui:Slider label="Slider" value="42" high-value="10" low-value="1"/>
-            <ui:IntegerField label="Integer Field" value="1" max-length="10"/>
+            <ui:Slider label="Slider" value="42" high-value="10" low-value="1" name="Radius-Slider"/>
+            <ui:IntegerField label="Integer Field" value="1" max-length="10" name="Radius-Field"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" class="filters"/>

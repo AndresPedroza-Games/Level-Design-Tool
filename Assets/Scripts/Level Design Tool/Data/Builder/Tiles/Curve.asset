@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TilesTemplateSO
   tileName: Curve
   tilePrefab: {fileID: 6908515355135426681, guid: 74d0d1d1c0ffbbd489bd050003d50a6d, type: 3}
-  tileImg: {fileID: 2800000, guid: 9e6fac66bca70491d95b4f6bd77af0ae, type: 3}
+  tileImg: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}

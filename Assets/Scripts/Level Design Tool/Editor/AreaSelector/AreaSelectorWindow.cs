@@ -2,13 +2,15 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class AreaSelectorWindow : ToolWindowController
 {
     private LayerMask _LayerMask;
 
     private string _Tag;
-    private int _Radius;
+    private float _Radius;
 
     public List<GameObject> selectedObjects = new List<GameObject>();
 
@@ -24,18 +26,19 @@ public class AreaSelectorWindow : ToolWindowController
 
     private void OnEnable()
     {
-        _Radius = LoadDataInt("AreaSelector Radius");
+        _LayerMask.value = LoadDataInt("Area Selector LayerMask");
+        _Radius = LoadDataInt("Area Selector Radius");
+        _Tag = LoadDataString("Area Selector Tag");
     }
 
     public void OnGUI()
     {
         Heading(rootVisualElement, this);
 
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Radius", EditorStyles.boldLabel);
-        _Radius = EditorGUILayout.IntSlider(_Radius, 1, 10);
-        SaveDataInt("AreaSelector Radius", _Radius);
-        GUILayout.EndHorizontal();
+        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();  
+        _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+
+        SaveDataInt("Area Selector Radius", _Radius.ConvertTo<int>());
 
         Filters();
     }
@@ -44,32 +47,31 @@ public class AreaSelectorWindow : ToolWindowController
     {
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.AreaSelectorToolWindow.CloneTree(rootVisualElement);
+
+        if (_Tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+
+        if (_Radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
     }
 
     private void SelectGameObject()
     {
         if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
             return;
-    } 
+    }
 
     private void Filters()
     {
-        GUILayout.Space(20);
-        GUILayout.Label("Filters", EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
         string[] layers = InternalEditorUtility.layers;
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Layer Mask");
         _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
-        SaveDataInt("Layer Value", _LayerMask.value);
-        EditorGUILayout.EndHorizontal();
+        //_LayerMask.value = rootVisualElement.Q<MaskField>();
+        SaveDataInt("Area Selector LayerMask", _LayerMask.value);
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Tag");
-        _Tag = EditorGUILayout.TextArea("");
-        EditorGUILayout.EndHorizontal();
+        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+
+        SaveDataString("Area Selector Tag", _Tag);
     }
 
 }

@@ -1,12 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
     <Style src="project://database/Assets/UI/Tools-Windows/Builder/Builder%20Tool%20Window.uss?fileID=7433441132597879392&amp;guid=f855492dfe5c653428b6a54ef58a95e3&amp;type=3#Builder Tool Window"/>
-    <ui:Instance template="Header-Tool-Template">
+    <ui:Instance template="Header-Tool-Template" class="header">
         <AttributeOverrides element-name="Header-Text" text="BUILDER"/>
     </ui:Instance>
-    <ui:VisualElement name="Container" class="Container Gap" style="flex-grow: 1; width: auto;">
-        <ui:Label text="Container: " class="text"/>
+    <ui:VisualElement name="Container" class="Gap setting-container" style="flex-grow: 1; width: auto;">
+        <ui:Label text="Container: " class="setting-text"/>
+        <uie:ObjectField name="Container-Selector"/>
     </ui:VisualElement>
-    <ui:ScrollView class="Scroll Gap"/>
+    <ui:ScrollView name="Prefab-Scroll" class="Scroll Gap"/>
     <ui:Button text="Current Prefabs" name="Current-Prefabs-Button" class="Gap Btn" style="width: auto;"/>
 </ui:UXML>

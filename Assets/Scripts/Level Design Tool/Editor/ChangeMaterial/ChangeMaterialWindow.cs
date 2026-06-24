@@ -1,6 +1,8 @@
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ChangeMaterialWindow : ToolWindowController
 {
@@ -22,7 +24,10 @@ public class ChangeMaterialWindow : ToolWindowController
     {
         SceneView.duringSceneGui += ChangeTileMaterial;
         _SelectedMaterial = AssetDatabase.LoadAssetAtPath<Material>(LoadDataString("Selected Material"));
-        _LayerMask.value = LoadDataInt("LayerMask Change Material");
+
+        _LayerMask.value = LoadDataInt("Change Material LayerMask");
+
+        _Tag = LoadDataString("Change Material Tag");
     }
 
     private void OnDisable()
@@ -43,12 +48,23 @@ public class ChangeMaterialWindow : ToolWindowController
         Filters();
     }
 
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.changeMaterialToolWindow.CloneTree(rootVisualElement);
+
+        if (_Tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+
+        if(_SelectedMaterial != null)
+            rootVisualElement.Q<ObjectField>("Material-Selector").value = _SelectedMaterial;
+
+    }
+
+
     private void MaterialSelector()
     {
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Selected Material", EditorStyles.boldLabel);
-        _SelectedMaterial = (Material)EditorGUILayout.ObjectField(_SelectedMaterial, typeof(Material), false);
-        GUILayout.EndHorizontal();
+        _SelectedMaterial = (Material)rootVisualElement.Q<ObjectField>("Material-Selector").value;
 
         SaveDataString("Selected Material", AssetDatabase.GetAssetPath(_SelectedMaterial));
     }
@@ -74,29 +90,16 @@ public class ChangeMaterialWindow : ToolWindowController
 
     }
 
-    protected void Filters()
+    private void Filters()
     {
-        GUILayout.Space(20);
-        GUILayout.Label("Filters", EditorStyles.boldLabel);
-        GUILayout.Space(10);
-
         string[] layers = InternalEditorUtility.layers;
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Layer Mask");
         _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
-        SaveDataInt("LayerMask Change Material", _LayerMask.value);
-        EditorGUILayout.EndHorizontal();
+        //_LayerMask.value = rootVisualElement.Q<MaskField>();
+        SaveDataInt("Change Material LayerMask", _LayerMask.value);
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Tag");
-        _Tag = EditorGUILayout.TextArea("");
-        EditorGUILayout.EndHorizontal();
-    }
+        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
-    public void CreateGUI()
-    {
-        _Manager = FindFirstObjectByType<Manager>();
-        _Manager.changeMaterialToolWindow.CloneTree(rootVisualElement);
+        SaveDataString("Change Material Tag", _Tag);
     }
 }

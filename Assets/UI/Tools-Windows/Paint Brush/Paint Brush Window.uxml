@@ -10,12 +10,12 @@
             <ui:Label text="Settings" name="Setting-Titel" class="Filter-Text settings-titel"/>
             <ui:VisualElement name="Color" class="Color-Setting setting-container" style="flex-grow: 1;">
                 <ui:Label text="Color" name="Color-Text" class="Text"/>
-                <ui:Button text="Button" class="Header-Btn"/>
+                <uie:ColorField label="UXML Field" name="Color-Picker"/>
             </ui:VisualElement>
             <ui:VisualElement name="Radius" class="Radius setting-container" style="flex-grow: 1;">
                 <ui:Label text="Radius" name="Radius-Text" class="Text"/>
                 <ui:Slider label="Slider" value="0" high-value="10" name="Radius-Slider" low-value="1"/>
-                <ui:IntegerField label="Integer Field" value="1" max-length="10"/>
+                <ui:IntegerField label="Integer Field" value="1" max-length="10" name="Radius-Field"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

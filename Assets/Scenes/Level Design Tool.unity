@@ -451,7 +451,11 @@ MonoBehaviour:
   eraserToolWindow: {fileID: 9197481963319205126, guid: 6c39b921a2c36ef4eba8e572a66cbc75, type: 3}
   header: {fileID: 9197481963319205126, guid: 30875ba5909cac34d8fd63ea76fdd588, type: 3}
   filters: {fileID: 9197481963319205126, guid: 413dba83bed3f654a8524a10f46511c0, type: 3}
-  tilesContainer: {fileID: 11400000, guid: ef006bf45f72b484fbc3c3e0fe35172c, type: 2}
+  currentPrefabs: {fileID: 9197481963319205126, guid: a47d66ac69bd44c429b6bae88dc45c58, type: 3}
+  tilePrefabsCard: {fileID: 9197481963319205126, guid: 8ef274328ee611b49a3e33af618b3582, type: 3}
+  currentPrefabsCard: {fileID: 9197481963319205126, guid: 36582de8a0127ed468727b4acb4d1fe3, type: 3}
+  confirmSelection: {fileID: 9197481963319205126, guid: 08195f4cc42ac524eb5cf989af0a8ece, type: 3}
+  currentTilesContainer: {fileID: 11400000, guid: ef006bf45f72b484fbc3c3e0fe35172c, type: 2}
   paintBrushTool: {fileID: 8758357336397124706, guid: 38cbb66b93bc3214baaea5997b8e841d, type: 3}
   areaSelectorTool: {fileID: 7130126264735755493, guid: d859df910a4234443adc2cb4e6f1229c, type: 3}
   spawnPoint: {fileID: 552857543}
@@ -464,7 +468,7 @@ Transform:
   m_GameObject: {fileID: 621513456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: -0.85, y: -0, z: -1.991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

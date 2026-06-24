@@ -12,16 +12,13 @@ public class BuilderConfirmationWindow : ToolWindowController
         GetWindow<BuilderConfirmationWindow>();
     }
 
-    private void OnGUI()
-    {
-        SetButton(rootVisualElement, "Confirm", Confirm);
-        SetButton(rootVisualElement, "Cancel", Cancel);
-    }
-
     public void CreateGUI()
     {
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.confirmSelection.CloneTree(rootVisualElement);
+
+        SetButton(rootVisualElement, "Confirm", Confirm);
+        SetButton(rootVisualElement, "Cancel", Cancel);
     }
 
     private void Confirm()
@@ -31,7 +28,7 @@ public class BuilderConfirmationWindow : ToolWindowController
             currentTile.GetComponent<TilesController>().tileIsPlaced = true;
             currentTile.transform.position = currentTile.GetComponent<TilesController>().endPosition;
 
-            _Manager.tilesContainer.tilesGameobjects.Add(currentTile);
+            _Manager.currentTilesContainer.tilesGameobjects.Add(currentTile);
             ChangeWindow(BuilderWindow.ShowWindow, this);
         }
     }

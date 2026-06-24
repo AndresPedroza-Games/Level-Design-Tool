@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using System;
+using UnityEditor.UIElements;
 
 public class BuilderWindow : ToolWindowController
 {
@@ -8,8 +10,7 @@ public class BuilderWindow : ToolWindowController
     private Manager _Manager;
 
     private GameObject currentTile;
-    private Vector2 scrollPos;
-
+    private ScrollView _Scroll;
 
     [MenuItem("Tools/Builder Window %M")]
     public static void ShowWindow()
@@ -21,28 +22,25 @@ public class BuilderWindow : ToolWindowController
     {
         if(_TileContainer == null)
             _TileContainer = LoadData();
+
     }
 
     public void OnGUI()
     {
         Heading(rootVisualElement, this);
 
-        _TileContainer = (TilesContainerSO)EditorGUILayout.ObjectField(_TileContainer, typeof(TilesContainerSO), false);
+        _TileContainer = (TilesContainerSO)rootVisualElement.Q<ObjectField>("Container-Selector").value;
+
+        if (_TileContainer == null)
+            return;
+
+        if (_TileContainer.GetType() != typeof(TilesContainerSO))
+        {
+            EditorGUILayout.HelpBox("Tile Container is wrong!", MessageType.Warning);
+            return;
+        }
+
         SaveData(_TileContainer);
-
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-
-        if (_TileContainer != null)
-        {
-            for (int index = 0; index < _TileContainer.tilesGameobjects.Count; index++)
-            {
-                BuilderTilesContainerBox(index);
-            }
-        }
-        else
-        {
-            EditorGUILayout.HelpBox("Tile Container is missing!", MessageType.Warning);
-        }
 
         SetButton(rootVisualElement, "Current-Prefabs-Button", () => ChangeWindow(BuilderCurrentTilesWindow.ShowWindow, this));
 
@@ -52,6 +50,43 @@ public class BuilderWindow : ToolWindowController
     {
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.builderToolWindow.CloneTree(rootVisualElement);
+
+        _Scroll = rootVisualElement.Q<ScrollView>("Prefab-Scroll");
+
+        if(_TileContainer != null)
+            rootVisualElement.Q<ObjectField>("Container-Selector").value = _TileContainer;
+
+        PopulateScroll(_Scroll);
+
+    }
+
+    private void PopulateScroll(ScrollView scrollView)
+    {
+        if (_TileContainer != null)
+        {
+            foreach (GameObject prefab in _TileContainer.tilesGameobjects)
+            {
+                VisualElement card = _Manager.tilePrefabsCard.CloneTree();
+
+                card.style.width = 660;
+                card.style.height = 150;
+                card.style.marginBottom = 10;
+                card.style.marginTop = 10;
+
+                TilesTemplateSO currentTileTemplate = prefab.GetComponent<TilesController>().tileTemplate;
+
+                card.Q<Label>("Name").text = currentTileTemplate.tileName;
+                card.Q<Image>("Icon").sprite = currentTileTemplate.tileImg;
+
+                SetButton(card, "Instantiate", () => InstantiateTile(prefab));
+
+                scrollView.Add(card);
+            }
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("Tile Container is missing!", MessageType.Warning);
+        }
     }
 
     private void SaveData(TilesContainerSO tilesContainer)
@@ -76,27 +111,6 @@ public class BuilderWindow : ToolWindowController
         ChangeWindow(BuilderConfirmationWindow.ShowWindow, this);
 
         TilesCustomization.currentTile = this.currentTile;
-    }
-
-    private void BuilderTilesContainerBox(int index)
-    {
-        if (_TileContainer.tilesGameobjects[index] == null)
-            return;
-
-        TilesTemplateSO currentTileTemplate = _TileContainer.tilesGameobjects[index].GetComponent<TilesController>().tileTemplate;
-
-        EditorGUILayout.BeginHorizontal("Box");
-
-        GUILayout.Box(currentTileTemplate.tileImg, GUILayout.Width(100), GUILayout.Height(100));
-
-        EditorGUILayout.BeginVertical("Box");
-        GUILayout.Label(currentTileTemplate.tileName);
-        SetButton(rootVisualElement, "", () => InstantiateTile(currentTileTemplate.tilePrefab));
-        EditorGUILayout.EndVertical();
-
-        EditorGUILayout.EndHorizontal();
-
-        GUILayout.Space(10);
     }
 
 }

@@ -17,10 +17,12 @@ public class Manager : MonoBehaviour
 
     [Header("UI Visual Builder Templates")]
     public VisualTreeAsset currentPrefabs;
+    public VisualTreeAsset tilePrefabsCard;
+    public VisualTreeAsset currentPrefabsCard;
     public VisualTreeAsset confirmSelection;
 
     [Header("Elements In Scene")]
-    public TilesContainerSO tilesContainer;
+    public TilesContainerSO currentTilesContainer;
 
     [Header("Level Design Tools")]
     public GameObject paintBrushTool;

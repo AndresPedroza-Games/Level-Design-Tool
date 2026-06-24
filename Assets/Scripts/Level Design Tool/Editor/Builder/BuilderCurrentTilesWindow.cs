@@ -1,10 +1,15 @@
+using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuilderCurrentTilesWindow : ToolWindowController
 {
     public TilesContainerSO _TileContainer;
-    private Vector2 scrollPos;
+
+    private Manager _Manager;
+    private ScrollView _Scroll;
 
     public static void ShowWindow()
     {
@@ -13,44 +18,50 @@ public class BuilderCurrentTilesWindow : ToolWindowController
 
     private void OnGUI()
     {
-        _TileContainer = FindFirstObjectByType<Manager>().tilesContainer;
+        Heading(rootVisualElement, this);
+    }
 
-        GUILayout.Space(20);
-        //Heading("Current Prefabs in Scene", this);
+    public void CreateGUI()
+    {
+        _Manager = FindFirstObjectByType<Manager>();
+        _Manager.currentPrefabs.CloneTree(rootVisualElement);
 
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+        _Scroll = rootVisualElement.Q<ScrollView>("Prefab-Scroll");
+
+        _TileContainer = FindFirstObjectByType<Manager>().currentTilesContainer;
 
         if (_TileContainer != null)
+            rootVisualElement.Q<ObjectField>("Container-Selector").value = _TileContainer;
+
+        PopulateScroll(_Scroll);
+
+    }
+
+    private void PopulateScroll(ScrollView scrollView)
+    {
+        if (_TileContainer != null)
         {
-            for (int index = 0; index < _TileContainer.tilesGameobjects.Count; index++)
+            foreach (GameObject prefab in _TileContainer.tilesGameobjects)
             {
-                CurrentTilesInScene(index);
+                VisualElement card = _Manager.currentPrefabsCard.CloneTree();
+
+                card.style.width = 660;
+                card.style.height = 150;
+                card.style.marginBottom = 10;
+                card.style.marginTop = 10;
+
+                TilesTemplateSO currentTileTemplate = prefab.GetComponent<TilesController>().tileTemplate;
+
+                card.Q<Label>("Name").text = currentTileTemplate.tileName;
+                card.Q<Image>("Icon").sprite = currentTileTemplate.tileImg;
+
+                scrollView.Add(card);
             }
         }
         else
         {
-            EditorGUILayout.HelpBox("Add the tile container in the manager!", MessageType.Warning);
-            return;
+            EditorGUILayout.HelpBox("Tile Container is missing!", MessageType.Warning);
         }
-
-        EditorGUILayout.EndScrollView();
-    }
-
-    private void CurrentTilesInScene(int index)
-    {
-        TilesTemplateSO currentTileTemplate = _TileContainer.tilesGameobjects[index].GetComponent<TilesController>().tileTemplate;
-
-        EditorGUILayout.BeginHorizontal("Box");
-
-        GUILayout.Box(currentTileTemplate.tileImg, GUILayout.Width(100), GUILayout.Height(100));
-
-        EditorGUILayout.BeginVertical("Box");
-        GUILayout.Label(currentTileTemplate.tileName);
-        EditorGUILayout.EndVertical();
-
-        EditorGUILayout.EndHorizontal();
-
-        GUILayout.Space(10);
     }
 
 }
