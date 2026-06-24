@@ -30,7 +30,7 @@ public class PaintBrushWindow : ToolWindowController
         _SelectedColor = LoadColor();
         _LayerMask.value = LoadDataInt("Paint Brush LayerMask");
         _Radius = LoadDataInt("Paint Brush Radius");
-        _Tag = LoadDataString("Paint Brush Tag");        
+        _Tag = LoadDataString("Paint Brush Tag");
 
     }
 
@@ -66,6 +66,10 @@ public class PaintBrushWindow : ToolWindowController
 
         if (_Radius != 0)
             rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+
+        if (_LayerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
+
     }
 
     private void PaintTile(SceneView sceneView)
@@ -103,7 +107,7 @@ public class PaintBrushWindow : ToolWindowController
 
         _LayerMask.value |= (1 << layer);
 
-        SaveDataInt("Paint Brush LayerMask", _LayerMask.value);
+        SaveDataInt("Paint Brush LayerMask", layer);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 

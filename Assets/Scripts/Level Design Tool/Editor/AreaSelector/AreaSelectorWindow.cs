@@ -53,6 +53,9 @@ public class AreaSelectorWindow : ToolWindowController
 
         if (_Radius != 0)
             rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+
+        if (_LayerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
     }
 
     private void SelectGameObject()
@@ -72,7 +75,7 @@ public class AreaSelectorWindow : ToolWindowController
 
         _LayerMask.value |= (1 << layer);
 
-        SaveDataInt("Area Selector LayerMask", _LayerMask.value);
+        SaveDataInt("Area Selector LayerMask", layer);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 

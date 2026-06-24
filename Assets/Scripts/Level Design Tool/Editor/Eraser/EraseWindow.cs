@@ -59,8 +59,8 @@ public class EraseWindow : ToolWindowController
         if (_Radius != 0)
             rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
 
-        if(_LayerMask > 0)
-            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask);
+        if (_LayerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
     }
 
     private void EraseObject(SceneView sceneView)
@@ -96,7 +96,7 @@ public class EraseWindow : ToolWindowController
 
         _LayerMask.value |= (1 << layer);
 
-        SaveDataInt("Eraser LayerMas", _LayerMask.value);
+        SaveDataInt("Eraser LayerMas", layer);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 

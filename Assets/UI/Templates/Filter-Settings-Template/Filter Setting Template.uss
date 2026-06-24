@@ -17,14 +17,6 @@
     flex-shrink: 1;
 }
 
-.Filter-Text {
-    -unity-font-style: bold;
-    color: rgb(255, 255, 255);
-    -unity-text-outline-color: rgb(24, 64, 113);
-    -unity-text-outline-width: 0;
-    font-size: 16px;
-}
-
 .Filter-Setting {
     justify-content: space-between;
     align-items: center;
@@ -82,12 +74,22 @@
 .unity-base-popup-field {
 }
 
+
+
 .Text {
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     -unity-text-outline-color: rgb(255, 255, 255);
     -unity-text-outline-width: 0;
     -unity-text-align: middle-left;
-    font-size: 12px;
+    font-size: 19px;
     text-shadow: 0 0 0 rgb(255, 255, 255);
+}
+
+.Filter-Text {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 21px;
+    padding-left: 5px;
+    margin-bottom: 0;
 }

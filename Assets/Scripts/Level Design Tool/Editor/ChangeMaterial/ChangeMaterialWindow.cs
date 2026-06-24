@@ -60,6 +60,9 @@ public class ChangeMaterialWindow : ToolWindowController
         if(_SelectedMaterial != null)
             rootVisualElement.Q<ObjectField>("Material-Selector").value = _SelectedMaterial;
 
+        if (_LayerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
+
     }
 
 
@@ -102,7 +105,7 @@ public class ChangeMaterialWindow : ToolWindowController
 
         _LayerMask.value |= (1 << layer);
 
-        SaveDataInt("Change Material LayerMask", _LayerMask.value);
+        SaveDataInt("Change Material LayerMask", layer);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
