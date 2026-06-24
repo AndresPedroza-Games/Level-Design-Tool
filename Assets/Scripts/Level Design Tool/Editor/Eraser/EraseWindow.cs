@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
+using System.Collections.Generic;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EraseWindow : ToolWindowController
 {
@@ -56,6 +58,9 @@ public class EraseWindow : ToolWindowController
 
         if (_Radius != 0)
             rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+
+        if(_LayerMask > 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask);
     }
 
     private void EraseObject(SceneView sceneView)
@@ -82,10 +87,15 @@ public class EraseWindow : ToolWindowController
 
     private void Filters()
     {
-        string[] layers = InternalEditorUtility.layers;
+        DropdownField dropdownField = rootVisualElement.Q<DropdownField>("Layer-Mask-Selection");
 
-        _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
-        //_LayerMask.value = rootVisualElement.Q<MaskField>();
+        string[] layers = InternalEditorUtility.layers;
+        dropdownField.choices = new List<string>(layers);
+
+        int layer = LayerMask.NameToLayer(dropdownField.value);
+
+        _LayerMask.value |= (1 << layer);
+
         SaveDataInt("Eraser LayerMas", _LayerMask.value);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;

@@ -32,4 +32,34 @@ public class Manager : MonoBehaviour
     [Header("Builder Tool")]
     public Transform spawnPoint;
 
+    [Header("Grid Settings")]
+    public int gridSize = 1000;
+    public float cellSize = 1f;
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+
+        float halfSize = gridSize * cellSize * 0.5f;
+
+        for (int x = -gridSize / 2; x <= gridSize / 2; x++)
+        {
+            float xPos = x * cellSize;
+
+            Gizmos.DrawLine(new Vector3(xPos, 0, -halfSize),new Vector3(xPos, 0, halfSize));
+        }
+
+        for (int z = -gridSize / 2; z <= gridSize / 2; z++)
+        {
+            float zPos = z * cellSize;
+
+            Gizmos.DrawLine(new Vector3(-halfSize, 0, zPos),new Vector3(halfSize, 0, zPos));
+        }
+
+        Gizmos.DrawLine(new Vector3(-halfSize, 0, 0),new Vector3(halfSize, 0, 0));
+
+        Gizmos.DrawLine(new Vector3(0, 0, -halfSize),new Vector3(0, 0, halfSize)); 
+    }
+
 }

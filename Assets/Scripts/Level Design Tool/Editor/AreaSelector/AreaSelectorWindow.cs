@@ -63,10 +63,15 @@ public class AreaSelectorWindow : ToolWindowController
 
     private void Filters()
     {
-        string[] layers = InternalEditorUtility.layers;
+        DropdownField dropdownField = rootVisualElement.Q<DropdownField>("Layer-Mask-Selection");
 
-        _LayerMask.value = EditorGUILayout.MaskField("", _LayerMask.value, layers);
-        //_LayerMask.value = rootVisualElement.Q<MaskField>();
+        string[] layers = InternalEditorUtility.layers;
+        dropdownField.choices = new List<string>(layers);
+
+        int layer = LayerMask.NameToLayer(dropdownField.value);
+
+        _LayerMask.value |= (1 << layer);
+
         SaveDataInt("Area Selector LayerMask", _LayerMask.value);
 
         _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
