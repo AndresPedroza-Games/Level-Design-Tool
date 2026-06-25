@@ -456,8 +456,10 @@ MonoBehaviour:
   currentPrefabsCard: {fileID: 9197481963319205126, guid: 36582de8a0127ed468727b4acb4d1fe3, type: 3}
   confirmSelection: {fileID: 9197481963319205126, guid: 08195f4cc42ac524eb5cf989af0a8ece, type: 3}
   currentTilesContainer: {fileID: 11400000, guid: ef006bf45f72b484fbc3c3e0fe35172c, type: 2}
-  paintBrushTool: {fileID: 8758357336397124706, guid: 38cbb66b93bc3214baaea5997b8e841d, type: 3}
-  areaSelectorTool: {fileID: 7130126264735755493, guid: d859df910a4234443adc2cb4e6f1229c, type: 3}
+  paintBrushPrefab: {fileID: 8758357336397124706, guid: 38cbb66b93bc3214baaea5997b8e841d, type: 3}
+  eraserPrefab: {fileID: 8758357336397124706, guid: 3deb41559271e784da3aafa6b90ac2b9, type: 3}
+  changeMaterialPrefab: {fileID: 8758357336397124706, guid: 0732218f36aaa934d87f4ee19b519b5a, type: 3}
+  areaSelectorPrefab: {fileID: 8758357336397124706, guid: e419de9d10dad37449ca3ac40be7f040, type: 3}
   spawnPoint: {fileID: 552857543}
   gridSize: 1000
   cellSize: 1

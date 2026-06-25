@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEditorInternal;
@@ -7,13 +8,17 @@ using UnityEngine.UIElements;
 
 public class ChangeMaterialWindow : ToolWindowController
 {
-    private Material _SelectedMaterial;
-    private Material _NewMaterial;
+    public static ChangeMaterialWindow Instance;
+
+    public GameObject currentSelector;
+    public Material selectedMaterial;
+    public Material newMaterial;
     private Manager _Manager;
 
-    private LayerMask _LayerMask;
+    public LayerMask layerMask;
 
-    private string _Tag;
+    public string tag;
+    public float radius;
 
     [MenuItem("Tools/Change Material Window")]
     public static void ShowWindow()
@@ -23,17 +28,23 @@ public class ChangeMaterialWindow : ToolWindowController
 
     private void OnEnable()
     {
-        SceneView.duringSceneGui += ChangeTileMaterial;
-        _SelectedMaterial = AssetDatabase.LoadAssetAtPath<Material>(LoadDataString("Selected Material"));
+        selectedMaterial = AssetDatabase.LoadAssetAtPath<Material>(LoadDataString("Selected Material"));
 
-        _LayerMask.value = LoadDataInt("Change Material LayerMask");
+        layerMask.value = LoadDataInt("Change Material LayerMask");
+        tag = LoadDataString("Change Material Tag");
+        radius = LoadDataInt("Change Material Radius");
 
-        _Tag = LoadDataString("Change Material Tag");
+        if (Instance == null)
+            Instance = this;
+
     }
 
     private void OnDisable()
     {
-        SceneView.duringSceneGui -= ChangeTileMaterial;
+        if (Instance != null)
+            Instance = null;
+
+        DestroyImmediate(currentSelector);
     }
 
     private void OnGUI()
@@ -41,8 +52,15 @@ public class ChangeMaterialWindow : ToolWindowController
         Heading(rootVisualElement, this);
         GUILayout.Space(20);
 
-        if (_SelectedMaterial == null)
+        if (selectedMaterial == null)
             EditorGUILayout.HelpBox("No Material is selected!", MessageType.Warning);
+
+        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
+        radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+
+        SaveDataInt("Change Material Radius", radius.ConvertTo<int>());
+
+        currentSelector.GetComponent<ToolGizmo>().radius = radius;
 
         MaterialSelector();
 
@@ -54,44 +72,31 @@ public class ChangeMaterialWindow : ToolWindowController
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.changeMaterialToolWindow.CloneTree(rootVisualElement);
 
-        if (_Tag != null)
-            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+        if (tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = tag;
 
-        if(_SelectedMaterial != null)
-            rootVisualElement.Q<ObjectField>("Material-Selector").value = _SelectedMaterial;
+        if(selectedMaterial != null)
+            rootVisualElement.Q<ObjectField>("Material-Selector").value = selectedMaterial;
 
-        if (_LayerMask.value >= 0)
-            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
+        if (layerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
+        if (currentSelector == null)
+        {
+            currentSelector = Instantiate(_Manager.changeMaterialPrefab);
+            Selection.activeGameObject = currentSelector;
+        }
+
+        if (radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = radius;
     }
 
 
     private void MaterialSelector()
     {
-        _SelectedMaterial = (Material)rootVisualElement.Q<ObjectField>("Material-Selector").value;
+        rootVisualElement.Q<ObjectField>("Material-Selector").value = selectedMaterial;
 
-        SaveDataString("Selected Material", AssetDatabase.GetAssetPath(_SelectedMaterial));
-    }
-
-    private void ChangeTileMaterial(SceneView sceneView)
-    {
-        EventType onClick = EventType.MouseDown;
-
-        if (DetectObject(onClick) != null)
-        {
-            if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
-                return;
-
-            GameObject selectedObject = DetectObject(onClick);
-
-            Renderer renderer = selectedObject.GetComponent<Renderer>();
-
-            if (_SelectedMaterial == null)
-                _SelectedMaterial = renderer.sharedMaterial;
-            else
-                renderer.sharedMaterial = _SelectedMaterial;
-        }   
-
+        SaveDataString("Selected Material", AssetDatabase.GetAssetPath(selectedMaterial));
     }
 
     private void Filters()
@@ -103,12 +108,12 @@ public class ChangeMaterialWindow : ToolWindowController
 
         int layer = LayerMask.NameToLayer(dropdownField.value);
 
-        _LayerMask.value |= (1 << layer);
+        layerMask.value |= (1 << layer);
 
         SaveDataInt("Change Material LayerMask", layer);
 
-        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+        tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
-        SaveDataString("Change Material Tag", _Tag);
+        SaveDataString("Change Material Tag", tag);
     }
 }

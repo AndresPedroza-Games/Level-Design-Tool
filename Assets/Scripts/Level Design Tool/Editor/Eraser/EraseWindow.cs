@@ -4,16 +4,18 @@ using UnityEditorInternal;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using System.Collections.Generic;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EraseWindow : ToolWindowController
 {
-    private Manager _Manager;
+    public static EraseWindow Instance;
 
-    private LayerMask _LayerMask;
+    public Manager manager;
+    public GameObject currentEraser;
 
-    private string _Tag;
-    private float _Radius;
+    public LayerMask layerMask;
+
+    public string tag;
+    public float radius;
 
     [MenuItem("Tools/Erase Tool")]
     public static void ShowWindow()
@@ -23,16 +25,20 @@ public class EraseWindow : ToolWindowController
 
     private void OnEnable()
     {
-        SceneView.duringSceneGui += EraseObject;
+        layerMask.value = LoadDataInt("Eraser LayerMask");
+        radius = LoadDataInt("Eraser Radius");
+        tag = LoadDataString("Eraser Tag");
 
-        _LayerMask.value = LoadDataInt("Eraser LayerMask");
-        _Radius = LoadDataInt("Eraser Radius");
-        _Tag = LoadDataString("Eraser Tag");
+        if (Instance == null)
+            Instance = this;
     }
 
     private void OnDisable()
     {
-        SceneView.duringSceneGui -= EraseObject;
+        if (Instance != null)
+            Instance = null;
+
+        DestroyImmediate(currentEraser);
     }
 
     public void OnGUI()
@@ -41,48 +47,34 @@ public class EraseWindow : ToolWindowController
 
 
         rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
-        _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+        radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
 
-        SaveDataInt("Eraser Radius", _Radius.ConvertTo<int>());
+        currentEraser.GetComponent<ToolGizmo>().radius = radius;
+
+        SaveDataInt("Eraser Radius", radius.ConvertTo<int>());
 
         Filters();
     }
 
     public void CreateGUI()
     {
-        _Manager = FindFirstObjectByType<Manager>();
-        _Manager.eraserToolWindow.CloneTree(rootVisualElement);
+        manager = FindFirstObjectByType<Manager>();
+        manager.eraserToolWindow.CloneTree(rootVisualElement);
 
-        if (_Tag != null)
-            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+        if (tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = tag;
 
-        if (_Radius != 0)
-            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+        if (radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = radius;
 
-        if (_LayerMask.value >= 0)
-            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
-    }
+        if (layerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
-    private void EraseObject(SceneView sceneView)
-    {
-        if (DetectObject(EventType.MouseDown) != null)
+        if (currentEraser == null)
         {
-            if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
-                return;
-
-            _Manager.currentTilesContainer.tilesGameobjects.Remove(GetTileInList(DetectObject(EventType.MouseDown)));
-            DestroyImmediate(DetectObject(EventType.MouseDown));
+            currentEraser = Instantiate(manager.eraserPrefab);
+            Selection.activeGameObject = currentEraser;
         }
-    }
-
-    private GameObject GetTileInList(GameObject tile)
-    {
-        foreach (GameObject tiles in _Manager.currentTilesContainer.tilesGameobjects)
-        {
-            if (tile.GetInstanceID() == tiles.GetInstanceID() && _Manager.currentTilesContainer.tilesGameobjects.Contains(tile))
-                return tiles;
-        }
-        return null;
     }
 
     private void Filters()
@@ -94,12 +86,12 @@ public class EraseWindow : ToolWindowController
 
         int layer = LayerMask.NameToLayer(dropdownField.value);
 
-        _LayerMask.value |= (1 << layer);
+        layerMask.value |= (1 << layer);
 
         SaveDataInt("Eraser LayerMas", layer);
 
-        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+        tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
-        SaveDataString("Eraser Tag", _Tag);
+        SaveDataString("Eraser Tag", tag);
     }
 }

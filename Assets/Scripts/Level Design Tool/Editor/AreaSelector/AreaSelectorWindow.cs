@@ -7,14 +7,17 @@ using Unity.VisualScripting;
 
 public class AreaSelectorWindow : ToolWindowController
 {
-    private LayerMask _LayerMask;
+    public static AreaSelectorWindow Instance;
 
-    private string _Tag;
-    private float _Radius;
+    public LayerMask layerMask;
+
+    public string tag;
+    public float radius;
 
     public List<GameObject> selectedObjects = new List<GameObject>();
 
-    Manager _Manager;
+    public GameObject currentSelector;
+    private Manager _Manager;
 
 
     [MenuItem("Tools/Area Selector Tool")]
@@ -26,9 +29,20 @@ public class AreaSelectorWindow : ToolWindowController
 
     private void OnEnable()
     {
-        _LayerMask.value = LoadDataInt("Area Selector LayerMask");
-        _Radius = LoadDataInt("Area Selector Radius");
-        _Tag = LoadDataString("Area Selector Tag");
+        layerMask.value = LoadDataInt("Area Selector LayerMask");
+        radius = LoadDataInt("Area Selector Radius");
+        tag = LoadDataString("Area Selector Tag");
+
+        if (Instance == null)
+            Instance = this;
+    }
+
+    private void OnDisable()
+    {
+        if (Instance != null)
+            Instance = null;
+
+        DestroyImmediate(currentSelector);
     }
 
     public void OnGUI()
@@ -36,9 +50,11 @@ public class AreaSelectorWindow : ToolWindowController
         Heading(rootVisualElement, this);
 
         rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();  
-        _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+        radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
 
-        SaveDataInt("Area Selector Radius", _Radius.ConvertTo<int>());
+        currentSelector.GetComponent<ToolGizmo>().radius = radius;
+
+        SaveDataInt("Area Selector Radius", radius.ConvertTo<int>());
 
         Filters();
     }
@@ -48,20 +64,20 @@ public class AreaSelectorWindow : ToolWindowController
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.AreaSelectorToolWindow.CloneTree(rootVisualElement);
 
-        if (_Tag != null)
-            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+        if (tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = tag;
 
-        if (_Radius != 0)
-            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+        if (radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = radius;
 
-        if (_LayerMask.value >= 0)
-            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
-    }
+        if (layerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
-    private void SelectGameObject()
-    {
-        if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
-            return;
+        if (currentSelector == null)
+        {
+            currentSelector = Instantiate(_Manager.areaSelectorPrefab);
+            Selection.activeGameObject = currentSelector;
+        }
     }
 
     private void Filters()
@@ -73,13 +89,13 @@ public class AreaSelectorWindow : ToolWindowController
 
         int layer = LayerMask.NameToLayer(dropdownField.value);
 
-        _LayerMask.value |= (1 << layer);
+        layerMask.value |= (1 << layer);
 
         SaveDataInt("Area Selector LayerMask", layer);
 
-        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+        tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
-        SaveDataString("Area Selector Tag", _Tag);
+        SaveDataString("Area Selector Tag", tag);
     }
 
 }

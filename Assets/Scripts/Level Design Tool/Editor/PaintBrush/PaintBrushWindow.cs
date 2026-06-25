@@ -8,78 +8,81 @@ using UnityEngine.UIElements;
 
 public class PaintBrushWindow : ToolWindowController
 {
-    private Color _SelectedColor;
-    private LayerMask _LayerMask;
+    public static PaintBrushWindow Instance;
 
-    private string _Tag;
-    private float _Radius;
+    public Color selectedColor;
+    public LayerMask layerMask;
+
+    public string tag;
+    public float radius;
 
     private Manager _Manager;
+    public GameObject currentBrush;
 
     [MenuItem("Tools/Paint Brush Tool")]
     public static void ShowWindow()
     {
         GetWindow<PaintBrushWindow>();
-        //Instantiate(manager.paintBrushTool);
     }
 
     private void OnEnable()
     {
-        SceneView.duringSceneGui += PaintTile;
+        selectedColor = LoadColor();
+        layerMask.value = LoadDataInt("Paint Brush LayerMask");
+        radius = LoadDataInt("Paint Brush Radius");
+        tag = LoadDataString("Paint Brush Tag");
 
-        _SelectedColor = LoadColor();
-        _LayerMask.value = LoadDataInt("Paint Brush LayerMask");
-        _Radius = LoadDataInt("Paint Brush Radius");
-        _Tag = LoadDataString("Paint Brush Tag");
-
+        if (Instance == null)
+            Instance = this;
     }
 
     private void OnDisable()
     {
-        SceneView.duringSceneGui -= PaintTile;
+        DestroyImmediate(currentBrush);
+
+        if (Instance != null)
+            Instance = null;
     }
 
     public void OnGUI()
     {
         Heading(rootVisualElement, this);
 
-        _SelectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
-        SaveColor(_SelectedColor);
+        selectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
+        SaveColor(selectedColor);
 
         rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
-        _Radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
-        SaveDataInt("Paint Brush Radius", _Radius.ConvertTo<int>());
+        radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
+        SaveDataInt("Paint Brush Radius", radius.ConvertTo<int>());
+
+        currentBrush.GetComponent<ToolGizmo>().radius = radius;
 
         Filters();
     }
+
 
     public void CreateGUI()
     {
         _Manager = FindFirstObjectByType<Manager>();
         _Manager.paintBrushToolWindow.CloneTree(rootVisualElement);
 
-        if (_Tag != null)
-            rootVisualElement.Q<TextField>("Tag-Input").value = _Tag;
+        if (tag != null)
+            rootVisualElement.Q<TextField>("Tag-Input").value = tag;
 
-        if(_SelectedColor != null)
-            rootVisualElement.Q<ColorField>("Color-Picker").value = _SelectedColor;
+        if(selectedColor != null)
+            rootVisualElement.Q<ColorField>("Color-Picker").value = selectedColor;
 
-        if (_Radius != 0)
-            rootVisualElement.Q<Slider>("Radius-Slider").value = _Radius;
+        if (radius != 0)
+            rootVisualElement.Q<Slider>("Radius-Slider").value = radius;
 
-        if (_LayerMask.value >= 0)
-            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(_LayerMask.value);
+        if (layerMask.value >= 0)
+            rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
-    }
-
-    private void PaintTile(SceneView sceneView)
-    {
-        if (DetectObject(EventType.MouseDown) != null)
+        if(currentBrush == null)
         {
-            if (!CheckLayerMask(DetectObject(EventType.MouseDown), _LayerMask, _Tag))
-                return;
+            currentBrush = Instantiate(_Manager.paintBrushPrefab);
 
-            TilesCustomization.PaintMaterial(_SelectedColor, DetectObject(EventType.MouseDown), _LayerMask);
+            Selection.activeGameObject = currentBrush;
         }
     }
 
@@ -105,12 +108,12 @@ public class PaintBrushWindow : ToolWindowController
 
         int layer = LayerMask.NameToLayer(dropdownField.value);
 
-        _LayerMask.value |= (1 << layer);
+        layerMask.value |= (1 << layer);
 
         SaveDataInt("Paint Brush LayerMask", layer);
 
-        _Tag = rootVisualElement.Q<TextField>("Tag-Input").value;
+        tag = rootVisualElement.Q<TextField>("Tag-Input").value;
 
-        SaveDataString("Paint Brush Tag", _Tag);
+        SaveDataString("Paint Brush Tag", tag);
     }
 }

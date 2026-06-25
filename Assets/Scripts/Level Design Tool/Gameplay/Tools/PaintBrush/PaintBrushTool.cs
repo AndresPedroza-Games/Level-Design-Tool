@@ -1,12 +1,6 @@
 using UnityEngine;
 
-public class PaintBrushTool : MonoBehaviour
+public class PaintBrushTool : ToolGizmo
 {
-    public float radius = 1f;
     
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(transform.position, radius);
-    }
 }

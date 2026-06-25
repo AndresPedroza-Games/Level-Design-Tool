@@ -7,6 +7,8 @@ public class TilesController : MonoBehaviour
     public Vector3Int endPosition;
     public TilesTemplateSO tileTemplate;
 
+    public bool isSelected;
+
     private void OnDrawGizmos()
     {
         placeHolderGap = 1f;
@@ -20,5 +22,13 @@ public class TilesController : MonoBehaviour
             Gizmos.DrawWireCube(endPosition, transform.localScale);
 
         }
+
+        Gizmos.color = Color.white;
+
+        if (isSelected)
+        {
+            Gizmos.DrawWireMesh(GetComponent<Mesh>(), transform.position);
+        }
+
     }
 }
