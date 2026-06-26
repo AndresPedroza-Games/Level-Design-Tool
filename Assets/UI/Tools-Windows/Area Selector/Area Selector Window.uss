@@ -77,6 +77,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    justify-content: space-around;
 }
 
 .unity-integer-field {
@@ -132,4 +133,31 @@
 
 .unity-base-slider__dragger {
     background-color: rgb(255, 255, 255);
+}
+
+.mode-selector {
+    flex-grow: 1;
+    max-width: 75%;
+    flex-basis: -136px;
+}
+
+.btn {
+    min-height: 15%;
+    background-color: rgba(3, 28, 60, 0.73);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 0.5px;
+    border-right-width: 0.5px;
+    border-bottom-width: 0.5px;
+    border-left-width: 0.5px;
+}
+
+.btn-text {
+    -unity-text-align: middle-center;
 }

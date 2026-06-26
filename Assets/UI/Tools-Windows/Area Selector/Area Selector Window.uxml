@@ -12,6 +12,11 @@
             <ui:Slider label="Slider" value="42" high-value="10" low-value="1" name="Radius-Slider"/>
             <ui:IntegerField label="Integer Field" value="1" max-length="10" name="Radius-Field"/>
         </ui:VisualElement>
+        <ui:VisualElement name="Mode-Container" class="setting-container radius-container" style="flex-grow: 1;">
+            <ui:Label text="Mode" name="Mode-Titel" class="text"/>
+            <ui:DropdownField label="Dropdown" name="Mode-Selector" class="mode-selector"/>
+        </ui:VisualElement>
+        <ui:Button text="Deselect" name="Deselect-Container" class="btn text btn-text"/>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" class="filters"/>
 </ui:UXML>

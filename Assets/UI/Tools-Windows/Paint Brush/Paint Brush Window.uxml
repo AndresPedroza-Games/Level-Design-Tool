@@ -17,6 +17,11 @@
                 <ui:Slider label="Slider" value="0" high-value="10" name="Radius-Slider" low-value="1"/>
                 <ui:IntegerField label="Integer Field" value="1" max-length="10" name="Radius-Field"/>
             </ui:VisualElement>
+            <ui:VisualElement name="Opacity" class="Radius setting-container" style="flex-grow: 1;">
+                <ui:Label text="Opacity" name="Opacity-Text" class="Text"/>
+                <ui:Slider label="Slider" value="0.1" high-value="100" name="Opacity-Slider" low-value="1"/>
+                <ui:IntegerField label="Integer Field" value="1" max-length="100" name="Opacity-Field"/>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" class="filters"/>

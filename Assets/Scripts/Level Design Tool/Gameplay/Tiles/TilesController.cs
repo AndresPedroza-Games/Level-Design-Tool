@@ -27,7 +27,7 @@ public class TilesController : MonoBehaviour
 
         if (isSelected)
         {
-            Gizmos.DrawWireMesh(GetComponent<Mesh>(), transform.position);
+            Gizmos.DrawWireMesh(GetComponent<MeshFilter>().sharedMesh, transform.position);
         }
 
     }

@@ -4,20 +4,25 @@ using UnityEditorInternal;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
+using static AreaSelectorToolController;
+using System;
 
 public class AreaSelectorWindow : ToolWindowController
 {
     public static AreaSelectorWindow Instance;
 
+    public GameObject currentSelector;
+    private Manager _Manager;
+    private AreaSelectorToolController _AreaSelectorToolController;
+
     public LayerMask layerMask;
 
     public string tag;
     public float radius;
+    public string currentMode;
 
     public List<GameObject> selectedObjects = new List<GameObject>();
-
-    public GameObject currentSelector;
-    private Manager _Manager;
+    private List<string> modeList = new List<string>();
 
 
     [MenuItem("Tools/Area Selector Tool")]
@@ -32,6 +37,7 @@ public class AreaSelectorWindow : ToolWindowController
         layerMask.value = LoadDataInt("Area Selector LayerMask");
         radius = LoadDataInt("Area Selector Radius");
         tag = LoadDataString("Area Selector Tag");
+        currentMode = LoadDataString("Area Selector Mode");
 
         if (Instance == null)
             Instance = this;
@@ -52,10 +58,14 @@ public class AreaSelectorWindow : ToolWindowController
         rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();  
         radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
 
+        _AreaSelectorToolController = AreaSelectorToolController.Instance;
+        SetButton(rootVisualElement, "Deselect-Container", _AreaSelectorToolController.DeselectObjects);
+
         currentSelector.GetComponent<ToolGizmo>().radius = radius;
 
         SaveDataInt("Area Selector Radius", radius.ConvertTo<int>());
 
+        Mode();
         Filters();
     }
 
@@ -73,11 +83,31 @@ public class AreaSelectorWindow : ToolWindowController
         if (layerMask.value >= 0)
             rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
+        if (currentMode != null)
+            rootVisualElement.Q<DropdownField>("Mode-Selector").value = currentMode;
+
         if (currentSelector == null)
         {
             currentSelector = Instantiate(_Manager.areaSelectorPrefab);
             Selection.activeGameObject = currentSelector;
         }
+    }
+
+    private void Mode()
+    {
+        DropdownField dropdownField = rootVisualElement.Q<DropdownField>("Mode-Selector");
+
+        modeList.Add(Modes.Move.ToString());
+        modeList.Add(Modes.Rotate.ToString());
+        modeList.Add(Modes.Scale.ToString());
+
+        dropdownField.choices = modeList;
+
+        currentMode = dropdownField.value;
+        SaveDataString("Area Selector Mode", currentMode);
+
+        if (Enum.TryParse(currentMode, out Modes mode))
+            _AreaSelectorToolController.currentMode = mode;
     }
 
     private void Filters()

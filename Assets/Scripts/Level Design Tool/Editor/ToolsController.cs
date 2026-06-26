@@ -18,7 +18,7 @@ public class ToolsController : Editor
 
     protected RaycastHit[] DetectCollision(Vector3 origin, float radius)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(origin, radius, Vector3.forward);
+        RaycastHit[] hits = Physics.SphereCastAll(origin, radius, Vector3.down * 0.1f);
 
         return hits;
     }

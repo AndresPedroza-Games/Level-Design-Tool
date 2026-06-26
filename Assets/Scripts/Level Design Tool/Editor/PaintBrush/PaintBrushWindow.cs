@@ -15,6 +15,7 @@ public class PaintBrushWindow : ToolWindowController
 
     public string tag;
     public float radius;
+    public float opacity;
 
     private Manager _Manager;
     public GameObject currentBrush;
@@ -31,6 +32,7 @@ public class PaintBrushWindow : ToolWindowController
         layerMask.value = LoadDataInt("Paint Brush LayerMask");
         radius = LoadDataInt("Paint Brush Radius");
         tag = LoadDataString("Paint Brush Tag");
+        opacity = LoadDataInt("Paint Brush Opacity");
 
         if (Instance == null)
             Instance = this;
@@ -48,12 +50,19 @@ public class PaintBrushWindow : ToolWindowController
     {
         Heading(rootVisualElement, this);
 
+        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
+        radius = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
+        SaveDataInt("Paint Brush Radius", radius.ConvertTo<int>());
+
+        rootVisualElement.Q<IntegerField>("Opacity-Field").value = rootVisualElement.Q<Slider>("Opacity-Slider").value.ConvertTo<int>();
+        opacity = rootVisualElement.Q<Slider>("Opacity-Slider").value.ConvertTo<int>();
+        SaveDataInt("Paint Brush Opacity", radius.ConvertTo<int>());
+
+        opacity /= 100;
+
+        selectedColor.a = opacity;
         selectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
         SaveColor(selectedColor);
-
-        rootVisualElement.Q<IntegerField>("Radius-Field").value = rootVisualElement.Q<Slider>("Radius-Slider").value.ConvertTo<int>();
-        radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
-        SaveDataInt("Paint Brush Radius", radius.ConvertTo<int>());
 
         currentBrush.GetComponent<ToolGizmo>().radius = radius;
 
@@ -78,7 +87,10 @@ public class PaintBrushWindow : ToolWindowController
         if (layerMask.value >= 0)
             rootVisualElement.Q<DropdownField>("Layer-Mask-Selection").value = LayerMask.LayerToName(layerMask.value);
 
-        if(currentBrush == null)
+        if (opacity != 0)
+            rootVisualElement.Q<Slider>("Opacity-Slider").value = opacity;
+
+        if (currentBrush == null)
         {
             currentBrush = Instantiate(_Manager.paintBrushPrefab);
 
