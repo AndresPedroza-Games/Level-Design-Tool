@@ -32,7 +32,11 @@ public class PaintBrushController : ToolsController
                 if (!CheckLayerMask(gameObject, _Brush.layerMask, _Brush.tag))
                     return;
 
+                Undo.RecordObject(gameObject, "SelectedObject");
+
                 TilesCustomization.PaintMaterial(_Brush.selectedColor, gameObject, _Brush.layerMask);
+
+                EditorUtility.SetDirty(gameObject);
             }
         }
     }

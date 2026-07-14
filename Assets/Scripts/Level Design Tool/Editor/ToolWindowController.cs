@@ -54,4 +54,17 @@ public class ToolWindowController : EditorWindow
 
         returnButton.clicked += method.Invoke;
     }
+
+    protected void UndoACtion(Object obj, string name)
+    {
+        if (obj == null)
+            return;
+
+        Undo.RecordObject(obj, name);
+    }
+
+    protected void RedoAction()
+    {
+
+    }
 }

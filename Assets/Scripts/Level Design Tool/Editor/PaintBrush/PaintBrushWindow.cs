@@ -56,7 +56,7 @@ public class PaintBrushWindow : ToolWindowController
 
         rootVisualElement.Q<IntegerField>("Opacity-Field").value = rootVisualElement.Q<Slider>("Opacity-Slider").value.ConvertTo<int>();
         opacity = rootVisualElement.Q<Slider>("Opacity-Slider").value.ConvertTo<int>();
-        SaveDataInt("Paint Brush Opacity", radius.ConvertTo<int>());
+        SaveDataInt("Paint Brush Opacity", opacity.ConvertTo<int>());
 
         opacity /= 100;
 

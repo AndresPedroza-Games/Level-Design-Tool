@@ -25,7 +25,15 @@ public class ToolsController : Editor
 
     protected bool CheckLayerMask(GameObject gameObject, LayerMask requireLayer, string tag)
     {
-        if ((requireLayer.value & (1 << gameObject.layer)) == 0 && gameObject.tag != tag)
+        bool layerMatch = (requireLayer.value & (1 << gameObject.layer)) != 0;
+        bool tagMatch = false;
+
+        if (!string.IsNullOrEmpty(tag))
+        {
+            tagMatch = gameObject.CompareTag(tag);
+        }
+
+        if (!layerMatch && !tagMatch)
         {
             Debug.Log("Layer Mask doens't Match");
             return false;

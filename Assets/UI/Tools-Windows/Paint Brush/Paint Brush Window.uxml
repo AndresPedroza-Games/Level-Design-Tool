@@ -1,6 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Filter Setting Template" src="project://database/Assets/UI/Templates/Filter-Settings-Template/Filter%20Setting%20Template.uxml?fileID=9197481963319205126&amp;guid=413dba83bed3f654a8524a10f46511c0&amp;type=3#Filter Setting Template"/>
     <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
+    <ui:Template name="UndoRedoTemplate" src="project://database/Assets/UI/Templates/Undo-Redo-Template/UndoRedoTemplate.uxml?fileID=9197481963319205126&amp;guid=b6db7131e2d2c7549b47acf0bb509d5d&amp;type=3#UndoRedoTemplate"/>
     <Style src="project://database/Assets/UI/Tools-Windows/Paint%20Brush/Paint%20Brush%20Window.uss?fileID=7433441132597879392&amp;guid=79ea280e362b1234bba684840eb7ae0e&amp;type=3#Paint Brush Window"/>
     <ui:Instance template="Header-Tool-Template" class="header">
         <AttributeOverrides element-name="Header-Text" text="PAINT BRUSH"/>
@@ -25,4 +26,5 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" class="filters"/>
+    <ui:Instance template="UndoRedoTemplate"/>
 </ui:UXML>

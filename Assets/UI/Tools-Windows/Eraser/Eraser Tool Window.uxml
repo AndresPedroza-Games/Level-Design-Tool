@@ -1,6 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Filter Setting Template" src="project://database/Assets/UI/Templates/Filter-Settings-Template/Filter%20Setting%20Template.uxml?fileID=9197481963319205126&amp;guid=413dba83bed3f654a8524a10f46511c0&amp;type=3#Filter Setting Template"/>
     <ui:Template name="Header-Tool-Template" src="project://database/Assets/UI/Templates/Header-Tool-Template/Header-Tool-Template.uxml?fileID=9197481963319205126&amp;guid=30875ba5909cac34d8fd63ea76fdd588&amp;type=3#Header-Tool-Template"/>
+    <ui:Template name="UndoRedoTemplate" src="project://database/Assets/UI/Templates/Undo-Redo-Template/UndoRedoTemplate.uxml?fileID=9197481963319205126&amp;guid=b6db7131e2d2c7549b47acf0bb509d5d&amp;type=3#UndoRedoTemplate"/>
     <Style src="project://database/Assets/UI/Tools-Windows/Eraser/Eraser%20Tool%20Window.uss?fileID=7433441132597879392&amp;guid=80b53f176110b3a42a4009f4a7619447&amp;type=3#Eraser Tool Window"/>
     <ui:Instance template="Header-Tool-Template" name="header" class="header">
         <AttributeOverrides element-name="Header-Text" text="ERASER"/>
@@ -15,4 +16,5 @@
         <ui:VisualElement name="Container" class="setting-container" style="flex-grow: 1;"/>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" name="filters" class="filters"/>
+    <ui:Instance template="UndoRedoTemplate"/>
 </ui:UXML>

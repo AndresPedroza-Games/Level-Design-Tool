@@ -47,7 +47,7 @@ public class AreaSelectorToolController : ToolsController
 
         SelectObjects();
 
-        //_ModeDicctionary[currentMode].Invoke();
+        _ModeDicctionary[currentMode].Invoke();
 
         SceneView.RepaintAll();
     }
@@ -71,6 +71,14 @@ public class AreaSelectorToolController : ToolsController
                     selectedGameobject.Add(gameObject.transform);
             }
         }
+
+        if (selectedGameobject.Count > 0)
+        {
+            Tools.hidden = true;
+            _AreaSelector.currentSelector.GetComponent<AreaSelectorTool>().freeze = true;
+        }
+        else
+            Tools.hidden = false;
     }
 
     public void DeselectObjects()

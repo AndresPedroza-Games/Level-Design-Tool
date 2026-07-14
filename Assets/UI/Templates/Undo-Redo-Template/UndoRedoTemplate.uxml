@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Templates/Undo-Redo-Template/UndoRedoTemplate.uss?fileID=7433441132597879392&amp;guid=655ae3e41fbdb814e92ced96127a9e2c&amp;type=3#UndoRedoTemplate"/>
+    <ui:VisualElement name="Body" class="body" style="flex-grow: 1;">
+        <ui:Button text="Undo" name="UndoBtn" class="btn text undoBtn"/>
+        <ui:Button text="Redo" name="RedoBtn" class="btn text redoBtn"/>
+    </ui:VisualElement>
+</ui:UXML>
