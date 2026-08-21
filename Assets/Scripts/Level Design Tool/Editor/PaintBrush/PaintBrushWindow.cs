@@ -5,6 +5,7 @@ using UnityEditor.UIElements;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
 public class PaintBrushWindow : ToolWindowController
 {
@@ -36,6 +37,8 @@ public class PaintBrushWindow : ToolWindowController
 
         if (Instance == null)
             Instance = this;
+
+        ClearUndoRedo();
     }
 
     private void OnDisable()
@@ -58,11 +61,12 @@ public class PaintBrushWindow : ToolWindowController
         opacity = rootVisualElement.Q<Slider>("Opacity-Slider").value.ConvertTo<int>();
         SaveDataInt("Paint Brush Opacity", opacity.ConvertTo<int>());
 
-        opacity /= 100;
-
-        selectedColor.a = opacity;
         selectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
+        selectedColor.a = opacity / 10;
         SaveColor(selectedColor);
+
+        UndoAction(rootVisualElement, currentBrush);
+        RedoAction(rootVisualElement, currentBrush);
 
         currentBrush.GetComponent<ToolGizmo>().radius = radius;
 

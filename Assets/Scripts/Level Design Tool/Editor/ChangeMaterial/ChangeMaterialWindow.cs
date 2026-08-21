@@ -37,6 +37,7 @@ public class ChangeMaterialWindow : ToolWindowController
         if (Instance == null)
             Instance = this;
 
+        ClearUndoRedo();
     }
 
     private void OnDisable()
@@ -65,6 +66,9 @@ public class ChangeMaterialWindow : ToolWindowController
         MaterialSelector();
 
         Filters();
+
+        UndoAction(rootVisualElement, currentSelector);
+        RedoAction(rootVisualElement, currentSelector);
     }
 
     public void CreateGUI()

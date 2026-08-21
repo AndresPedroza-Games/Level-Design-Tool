@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5576993998252538223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8361869115666934491}
+  - component: {fileID: 4581129591255498507}
+  m_Layer: 0
+  m_Name: Level Design Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8361869115666934491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576993998252538223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 1.54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4581129591255498507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576993998252538223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be2b77a649b4474dbe9485c4c9bf256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Manager
+  levelDesignToolWindow: {fileID: 9197481963319205126, guid: b9ef4824315179647a50f5c2a4a85ff7, type: 3}
+  paintBrushToolWindow: {fileID: 9197481963319205126, guid: 127f03131f3b0584ebe050823022ba5b, type: 3}
+  AreaSelectorToolWindow: {fileID: 9197481963319205126, guid: 04444ad021530974bb3a5b96dd367b33, type: 3}
+  changeMaterialToolWindow: {fileID: 9197481963319205126, guid: e969d710d6ed7944a8c50ebf0b060edb, type: 3}
+  builderToolWindow: {fileID: 9197481963319205126, guid: 5a8d3cb4aabd35048a23fb6ca3ed43a1, type: 3}
+  eraserToolWindow: {fileID: 9197481963319205126, guid: 6c39b921a2c36ef4eba8e572a66cbc75, type: 3}
+  header: {fileID: 9197481963319205126, guid: 30875ba5909cac34d8fd63ea76fdd588, type: 3}
+  filters: {fileID: 9197481963319205126, guid: 413dba83bed3f654a8524a10f46511c0, type: 3}
+  currentPrefabs: {fileID: 9197481963319205126, guid: a47d66ac69bd44c429b6bae88dc45c58, type: 3}
+  tilePrefabsCard: {fileID: 9197481963319205126, guid: 8ef274328ee611b49a3e33af618b3582, type: 3}
+  currentPrefabsCard: {fileID: 9197481963319205126, guid: 36582de8a0127ed468727b4acb4d1fe3, type: 3}
+  confirmSelection: {fileID: 9197481963319205126, guid: 08195f4cc42ac524eb5cf989af0a8ece, type: 3}
+  currentTilesContainer: {fileID: 11400000, guid: ef006bf45f72b484fbc3c3e0fe35172c, type: 2}
+  paintBrushPrefab: {fileID: 8758357336397124706, guid: 38cbb66b93bc3214baaea5997b8e841d, type: 3}
+  eraserPrefab: {fileID: 8758357336397124706, guid: 3deb41559271e784da3aafa6b90ac2b9, type: 3}
+  changeMaterialPrefab: {fileID: 8758357336397124706, guid: 0732218f36aaa934d87f4ee19b519b5a, type: 3}
+  areaSelectorPrefab: {fileID: 8758357336397124706, guid: e419de9d10dad37449ca3ac40be7f040, type: 3}
+  spawnPoint: {fileID: 0}
+  gridSize: 1000
+  cellSize: 1

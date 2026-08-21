@@ -12,12 +12,13 @@ public class TilesCustomization : Editor
         //DrawHandler();
     }
 
-    public static void PaintMaterial(Color newColor, GameObject tile, LayerMask layerMask)
+    public static void PaintMaterial(Color newColor, GameObject tile)
     {
-
         Renderer renderer = tile.GetComponent<Renderer>();
 
         Material tileMaterial = renderer.sharedMaterial;
+
+        Undo.RecordObject(renderer, "Changed Color");
 
         renderer.sharedMaterial = new Material(renderer.sharedMaterial);
 
@@ -30,7 +31,6 @@ public class TilesCustomization : Editor
 
         if (EditorGUI.EndChangeCheck())
         {
-            Undo.RecordObject(tile, "Changed Color");
             renderer.sharedMaterial.color = currentColor;
         }
     }

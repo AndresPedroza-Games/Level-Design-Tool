@@ -32,7 +32,10 @@ public class EraserToolController : ToolsController
                 if (!CheckLayerMask(gameObject, _Eraser.layerMask, _Eraser.tag))
                     return;
 
+                Undo.RecordObject(_Eraser.manager.currentTilesContainer, "Erase Tile");
                 _Eraser.manager.currentTilesContainer.tilesGameobjects.Remove(GetTileInList(gameObject));
+
+                Undo.DestroyObjectImmediate(gameObject);
                 DestroyImmediate(gameObject);
             }
         }

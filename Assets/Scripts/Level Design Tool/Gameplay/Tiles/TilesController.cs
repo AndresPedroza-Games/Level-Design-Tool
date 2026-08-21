@@ -20,14 +20,13 @@ public class TilesController : MonoBehaviour
             endPosition = Vector3Int.RoundToInt(new Vector3(transform.position.x, transform.position.y - placeHolderGap, transform.position.z));
 
             Gizmos.DrawWireCube(endPosition, transform.localScale);
-
         }
 
         Gizmos.color = Color.white;
 
         if (isSelected)
         {
-            Gizmos.DrawWireMesh(GetComponent<MeshFilter>().sharedMesh, transform.position);
+            Gizmos.DrawWireMesh(GetComponent<MeshFilter>().sharedMesh, transform.position, transform.rotation, transform.localScale);
         }
 
     }

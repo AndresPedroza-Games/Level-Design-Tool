@@ -33,6 +33,8 @@ public class AreaSelectorToolController : ToolsController
     {
         if (Instance != null)
             Instance = null;
+
+        DeselectObjects();
     }
 
     private void OnSceneGUI()
@@ -83,17 +85,18 @@ public class AreaSelectorToolController : ToolsController
 
     public void DeselectObjects()
     {
-        if (selectedGameobject.Count <= 0)
-            return;
-
-        for (int i = 0; i < selectedGameobject.Count; i++)
+        if (selectedGameobject.Count > 0)
         {
-            selectedGameobject[i].GetComponent<TilesController>().isSelected = false;
+            for (int i = 0; i < selectedGameobject.Count; i++)
+            {
+                selectedGameobject[i].GetComponent<TilesController>().isSelected = false;
 
-            selectedGameobject.Remove(selectedGameobject[i].transform);
+                selectedGameobject.Remove(selectedGameobject[i].transform);
+            }
+
+            if(_AreaSelector)
+                _AreaSelector.currentSelector.GetComponent<AreaSelectorTool>().freeze = false;
         }
-
-        _AreaSelector.currentSelector.GetComponent<AreaSelectorTool>().freeze = false;
     }
 
     private void MoveObject()
@@ -179,25 +182,27 @@ public class AreaSelectorToolController : ToolsController
         foreach (Transform transform in selectedGameobject)
         {
             if (transform != null)
+            {
                 center += transform.position;
+            }
         }
 
         center /= selectedGameobject.Count;
 
         EditorGUI.BeginChangeCheck();
 
-        Vector3 newCenter = Handles.PositionHandle(center, Quaternion.identity);
+        Vector3 newScale = Handles.ScaleHandle(Vector3.one, center, Quaternion.identity, HandleUtility.GetHandleSize(center));
 
         if (EditorGUI.EndChangeCheck())
         {
-            Vector3 delta = newCenter - center;
-
-            Undo.RecordObjects(selectedGameobject.ToArray(), "Move Group");
+            Undo.RecordObjects(selectedGameobject.ToArray(), "Scale Group");
 
             foreach (Transform t in selectedGameobject)
             {
                 if (t != null)
-                    t.position += delta;
+                {
+                    t.localScale = new Vector3( t.localScale.x * newScale.x, t.localScale.y * newScale.y, t.localScale.z * newScale.z);
+                }
             }
         }
     }

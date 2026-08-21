@@ -31,6 +31,8 @@ public class EraseWindow : ToolWindowController
 
         if (Instance == null)
             Instance = this;
+
+        ClearUndoRedo();
     }
 
     private void OnDisable()
@@ -54,6 +56,9 @@ public class EraseWindow : ToolWindowController
         SaveDataInt("Eraser Radius", radius.ConvertTo<int>());
 
         Filters();
+
+        UndoAction(rootVisualElement, currentEraser);
+        RedoAction(rootVisualElement, currentEraser);
     }
 
     public void CreateGUI()

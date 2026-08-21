@@ -55,16 +55,20 @@ public class ToolWindowController : EditorWindow
         returnButton.clicked += method.Invoke;
     }
 
-    protected void UndoACtion(Object obj, string name)
+    protected void UndoAction(VisualElement ui, GameObject currentTool)
     {
-        if (obj == null)
-            return;
-
-        Undo.RecordObject(obj, name);
+        SetButton(ui, "UndoBtn", Undo.PerformUndo);
+        Selection.activeGameObject = currentTool;
     }
 
-    protected void RedoAction()
+    protected void RedoAction(VisualElement ui, GameObject currentTool)
     {
+        SetButton(ui, "RedoBtn", Undo.PerformRedo);
+        Selection.activeGameObject = currentTool;
+    }
 
+    protected void ClearUndoRedo()
+    {
+        Undo.ClearAll();
     }
 }

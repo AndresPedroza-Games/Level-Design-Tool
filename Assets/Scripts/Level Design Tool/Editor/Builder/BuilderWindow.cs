@@ -43,7 +43,6 @@ public class BuilderWindow : ToolWindowController
         SaveData(_TileContainer);
 
         SetButton(rootVisualElement, "Current-Prefabs-Button", () => ChangeWindow(BuilderCurrentTilesWindow.ShowWindow, this));
-
     }
 
     public void CreateGUI()
@@ -57,7 +56,6 @@ public class BuilderWindow : ToolWindowController
             rootVisualElement.Q<ObjectField>("Container-Selector").value = _TileContainer;
 
         PopulateScroll(_Scroll);
-
     }
 
     private void PopulateScroll(ScrollView scrollView)
@@ -105,7 +103,7 @@ public class BuilderWindow : ToolWindowController
 
     private void InstantiateTile(GameObject prefab)
     {
-        currentTile = Instantiate(prefab, _Manager.spawnPoint.position, Quaternion.identity, _Manager.gameObject.transform);
+        currentTile = Instantiate(prefab, _Manager.spawnPoint.position, Quaternion.identity);
 
         BuilderConfirmationWindow.currentTile = this.currentTile;
         ChangeWindow(BuilderConfirmationWindow.ShowWindow, this);

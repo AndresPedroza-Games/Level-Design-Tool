@@ -41,6 +41,8 @@ public class AreaSelectorWindow : ToolWindowController
 
         if (Instance == null)
             Instance = this;
+
+        ClearUndoRedo();
     }
 
     private void OnDisable()
@@ -59,11 +61,16 @@ public class AreaSelectorWindow : ToolWindowController
         radius = rootVisualElement.Q<Slider>("Radius-Slider").value;
 
         _AreaSelectorToolController = AreaSelectorToolController.Instance;
-        SetButton(rootVisualElement, "Deselect-Container", _AreaSelectorToolController.DeselectObjects);
+       
+        if(_AreaSelectorToolController)
+            SetButton(rootVisualElement, "Deselect-Container", _AreaSelectorToolController.DeselectObjects);
 
         currentSelector.GetComponent<ToolGizmo>().radius = radius;
 
         SaveDataInt("Area Selector Radius", radius.ConvertTo<int>());
+
+        UndoAction(rootVisualElement, currentSelector);
+        RedoAction(rootVisualElement, currentSelector);
 
         Mode();
         Filters();
@@ -106,7 +113,7 @@ public class AreaSelectorWindow : ToolWindowController
         currentMode = dropdownField.value;
         SaveDataString("Area Selector Mode", currentMode);
 
-        if (Enum.TryParse(currentMode, out Modes mode))
+        if (Enum.TryParse(currentMode, out Modes mode) && _AreaSelectorToolController)
             _AreaSelectorToolController.currentMode = mode;
     }
 

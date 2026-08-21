@@ -4,6 +4,8 @@ using UnityEngine;
 [CustomEditor(typeof(PaintBrushTool))]
 public class PaintBrushController : ToolsController
 {
+    public static PaintBrushController paintBrushController;
+    
     private PaintBrushWindow _Brush;
 
     private void OnSceneGUI()
@@ -32,9 +34,7 @@ public class PaintBrushController : ToolsController
                 if (!CheckLayerMask(gameObject, _Brush.layerMask, _Brush.tag))
                     return;
 
-                Undo.RecordObject(gameObject, "SelectedObject");
-
-                TilesCustomization.PaintMaterial(_Brush.selectedColor, gameObject, _Brush.layerMask);
+                TilesCustomization.PaintMaterial(_Brush.selectedColor, gameObject);
 
                 EditorUtility.SetDirty(gameObject);
             }

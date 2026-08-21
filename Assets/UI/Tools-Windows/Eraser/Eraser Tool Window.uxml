@@ -13,7 +13,6 @@
             <ui:Slider label="Slider" value="42" high-value="10" low-value="1" name="Radius-Slider"/>
             <ui:IntegerField label="Integer Field" value="1" max-length="10" name="Radius-Field"/>
         </ui:VisualElement>
-        <ui:VisualElement name="Container" class="setting-container" style="flex-grow: 1;"/>
     </ui:VisualElement>
     <ui:Instance template="Filter Setting Template" name="filters" class="filters"/>
     <ui:Instance template="UndoRedoTemplate"/>

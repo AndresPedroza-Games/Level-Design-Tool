@@ -34,6 +34,8 @@ public class ChangeMaterialToolController : ToolsController
 
                 Renderer renderer = selectedObject.GetComponent<Renderer>();
 
+                Undo.RecordObject(renderer, "Changed Material");
+
                 if (_MaterialWindow.selectedMaterial == null)
                     _MaterialWindow.selectedMaterial = renderer.sharedMaterial;
                 else
