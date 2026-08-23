@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using System;
 using UnityEditor.UIElements;
 
 public class BuilderWindow : ToolWindowController
@@ -52,14 +51,20 @@ public class BuilderWindow : ToolWindowController
 
         _Scroll = rootVisualElement.Q<ScrollView>("Prefab-Scroll");
 
-        if(_TileContainer != null)
-            rootVisualElement.Q<ObjectField>("Container-Selector").value = _TileContainer;
+        ObjectField tileContainerField = rootVisualElement.Q<ObjectField>("Container-Selector");
+
+        if (_TileContainer != null)
+            tileContainerField.value = _TileContainer;
+
+        tileContainerField.RegisterValueChangedCallback(action => {_TileContainer = action.newValue as TilesContainerSO;PopulateScroll(_Scroll);});
 
         PopulateScroll(_Scroll);
     }
 
     private void PopulateScroll(ScrollView scrollView)
     {
+        scrollView.Clear();
+
         if (_TileContainer != null)
         {
             foreach (GameObject prefab in _TileContainer.tilesGameobjects)

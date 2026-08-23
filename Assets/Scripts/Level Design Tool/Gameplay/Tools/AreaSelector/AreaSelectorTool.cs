@@ -4,6 +4,6 @@ public class AreaSelectorTool : ToolGizmo
 {
     private void OnDisable()
     {
-        freeze = false;
+        base.freeze = false;
     }
 }

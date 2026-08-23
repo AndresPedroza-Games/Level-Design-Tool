@@ -62,7 +62,7 @@ public class PaintBrushWindow : ToolWindowController
         SaveDataInt("Paint Brush Opacity", opacity.ConvertTo<int>());
 
         selectedColor = rootVisualElement.Q<ColorField>("Color-Picker").value;
-        selectedColor.a = opacity / 10;
+        selectedColor.a = opacity / 100;
         SaveColor(selectedColor);
 
         UndoAction(rootVisualElement, currentBrush);
